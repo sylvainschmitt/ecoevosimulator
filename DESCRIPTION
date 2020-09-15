@@ -1,0 +1,26 @@
+Package: ecoevosimulator
+Type: Package
+Title: Eco-evolutionnary simulator.
+Version: 1.0
+Date: 2020-07-21
+Author: Sylvain Schmitt
+Maintainer: Sylvain Schmitt <sylvain.m.schmitt@gmail.com>
+Description: Simulating eco-evolutionnary dynamics of virtual populations with topography and forest gap dynamics.
+License: GPL-3
+Imports: 
+    Rcpp (>= 1.0.1),
+    magrittr
+LinkingTo: Rcpp
+RoxygenNote: 6.1.1
+Collate: 
+    'RcppExports.R'
+    'ecoevosimulator-package.R'
+    'gui.R'
+    'plot.R'
+    'utils-pipe.R'
+    'simulator.R'
+Suggests: 
+    testthat (>= 2.1.0),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
