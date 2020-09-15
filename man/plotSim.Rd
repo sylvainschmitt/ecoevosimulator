@@ -7,7 +7,7 @@
 plotSim(simulation)
 }
 \arguments{
-\item{simulation.}{df.  result from simulator function}
+\item{simulation}{df.  result from simulator function}
 }
 \value{
 A ggplot.

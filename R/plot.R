@@ -4,7 +4,7 @@ NULL
 
 #' plotSim
 #'
-#' @param simulation. df.  result from simulator function
+#' @param simulation df.  result from simulator function
 #'
 #' @return A ggplot.
 #' 
