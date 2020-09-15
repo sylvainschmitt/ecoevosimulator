@@ -2,14 +2,18 @@
 #' @importFrom viridis scale_color_viridis
 NULL
 
-#' Title
+#' plotSim
 #'
-#' @param simulation 
+#' @param simulation. df.  result from simulator function
 #'
-#' @return
+#' @return A ggplot.
+#' 
 #' @export
 #'
 #' @examples
+#' 
+#' plotSim(simulator())
+#' 
 plotSim <- function(simulation){
   ggplot(simulation, aes(generation, value, 
                          group = individual, col = environment)) + 

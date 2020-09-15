@@ -2,13 +2,21 @@
 % Please edit documentation in R/plot.R
 \name{plotSim}
 \alias{plotSim}
-\title{Title}
+\title{plotSim}
 \usage{
 plotSim(simulation)
 }
 \arguments{
-\item{simulation}{}
+\item{simulation.}{df.  result from simulator function}
+}
+\value{
+A ggplot.
 }
 \description{
-Title
+plotSim
+}
+\examples{
+
+plotSim(simulator())
+
 }
