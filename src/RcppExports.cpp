@@ -6,16 +6,18 @@
 using namespace Rcpp;
 
 // disperse
-int disperse(int a, int d, int xmin, int xmax);
-RcppExport SEXP _ecoevosimulator_disperse(SEXP aSEXP, SEXP dSEXP, SEXP xminSEXP, SEXP xmaxSEXP) {
+IntegerVector disperse(IntegerVector a, int d, int xmin, int xmax, int ymin, int ymax);
+RcppExport SEXP _ecoevosimulator_disperse(SEXP aSEXP, SEXP dSEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type a(aSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type a(aSEXP);
     Rcpp::traits::input_parameter< int >::type d(dSEXP);
     Rcpp::traits::input_parameter< int >::type xmin(xminSEXP);
     Rcpp::traits::input_parameter< int >::type xmax(xmaxSEXP);
-    rcpp_result_gen = Rcpp::wrap(disperse(a, d, xmin, xmax));
+    Rcpp::traits::input_parameter< int >::type ymin(yminSEXP);
+    Rcpp::traits::input_parameter< int >::type ymax(ymaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(disperse(a, d, xmin, xmax, ymin, ymax));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -53,7 +55,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_ecoevosimulator_disperse", (DL_FUNC) &_ecoevosimulator_disperse, 4},
+    {"_ecoevosimulator_disperse", (DL_FUNC) &_ecoevosimulator_disperse, 6},
     {"_ecoevosimulator_product_environmental_matrix", (DL_FUNC) &_ecoevosimulator_product_environmental_matrix, 2},
     {"_ecoevosimulator_simulatorCpp", (DL_FUNC) &_ecoevosimulator_simulatorCpp, 10},
     {NULL, NULL, 0}

@@ -2,10 +2,12 @@
 #define DISPERSE_H
 
 #include <Rcpp.h>
-int disperse(
-    int a,
-    int d,
-    int xmin,
-    int xmax
+Rcpp::IntegerVector disperse(
+        Rcpp::IntegerVector a,
+        int d,
+        int xmin,
+        int xmax,
+        int ymin,
+        int ymax
 );
 #endif

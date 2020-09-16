@@ -42,49 +42,66 @@ List simulatorCpp(
 ) {
   int Nind = grid*grid ;
   
-  NumericMatrix E(Ngen, Nind) ; // environmental values
-  NumericMatrix A(Ngen, Nind) ; // genetic values
-  NumericMatrix Z(Ngen, Nind) ; // phenotypic values
+  // Matrices stocking all values
+  NumericMatrix E(Ngen, Nind) ; // ecotypes
+  NumericMatrix A(Ngen, Nind) ; // genotypes
+  NumericMatrix Z(Ngen, Nind) ; // phenotypes
   
-  NumericMatrix Egen = product_environmental_matrix(Elim, grid) ; // Environmental matrix
-  NumericMatrix Agen(grid, grid) ; // genetic values for one generation
-  NumericMatrix Zgen(grid, grid) ; // phenotypic values for one generation
+  // Matrices for values at one generation
+  NumericMatrix Egen = product_environmental_matrix(Elim, grid) ;
+  NumericMatrix Agen(grid, grid) ;
+  NumericMatrix Zgen(grid, grid) ;
   
-  // NumericMatrix Aoffsprings(Nind, seedlings) ; // Offspring genetic values for one generation
-  // NumericMatrix Zoffsprings(Nind, seedlings) ; // Offspring phenotypic values for one generation
-  // 
-  // NumericVector w(seedlings) ; // Seedlings probabilities for one cell
-  // IntegerVector seeds = seq(0, seedlings) ; // seedlings for one cell
-  // int mother, father, winner ; // mother, father and winner positions
-  // double muS ;
+  // objects for seedlings
+  IntegerVector individual(2),  mother(2), father(2), seeds = seq(0, seedlings-1) ;
+  NumericVector aoffsprings(seedlings), zoffsprings(seedlings), viability(seedlings) ;
+  int winner ;
+  NumericMatrix Aoffsprings(grid, grid) ;
+  NumericMatrix Zoffsprings(grid, grid) ;
+
+  // Gradient init with random draw
   E.row(0) = Egen ;
-  A.row(0) = rnorm(Nind, muG, sigmaG) ;   // Gradient init with random draw
-  Z.row(0) = rnorm(Nind, muE, sigmaE) ;
   for(int i = 0; i < Nind; i++){
-    Agen[i] = A.row(0)[i] ;
-    Zgen[i] = Z.row(0)[i] ;
+    Agen[i] = rnorm(1, muG, sigmaG)[0] ;
+    Zgen[i] = Agen[i] + rnorm(1, muE, sigmaE)[0] ;
   }
-  for (int g = 1; g < Ngen; g++){ // gens
-  //   for (int i = 0; i < Nind; i++){ // inds
-  //     for (int s = 0; s < seedlings; s++){
-  //       mother = disperse(i, dispersal, 0, Nind) ;
-  //       father = disperse(mother, dispersal, 0, Nind) ;
-  //       Aoffsprings(i,s) = rnorm(1, (A(g-1,mother) + A(g-1,father))/2, sigmaG/2)[0] ;
-  //       Zoffsprings(i,s) = Aoffsprings(i,s) + rnorm(1, muE, sigmaE)[0] ;
-  //     }
-  //     if(viability_deterministic){
-  //       winner = which_min(sqrt(pow(Zoffsprings(i,_)-E(i), 2))) ; 
-  //     } else {
-  //       w = 1/sqrt(pow(Zoffsprings(i,_)-E(i), 2)) ;
-  //       winner = sample(seeds, 1, true, w)[0] ;
-  //     }
-  //     A(g,i) = Aoffsprings(i,winner) ;
-  //     Z(g,i) =  Zoffsprings(i,winner) ;
-  //   }
+  A.row(0) = Agen ;
+  Z.row(0) = Zgen  ;
   
-  E.row(g) = Egen ;
-  A.row(g) = Agen ;
-  Z.row(g) = Zgen ;
+  // simulation
+  for (int g = 1; g < Ngen; g++){ // gens
+    for (int x = 0; x < grid; x++){ // rows
+      for (int y = 0; y < grid; y++){ // cols
+        
+        individual[0] = x ;
+        individual[1] = y ;
+        // dispersal
+        for (int s = 0; s < seedlings; s++){
+          mother = disperse(individual, dispersal, 0, grid, 0, grid) ;
+          father = disperse(mother, dispersal, 0, grid, 0, grid) ;
+          aoffsprings(s) = rnorm(1, (A(mother[0],mother[1]) + A(father[0],father[1]))/2, sigmaG/2)[0] ;
+          zoffsprings(s) = aoffsprings(s) + rnorm(1, muE, sigmaE)[0] ;
+        }
+
+        // viability
+        viability = 1/sqrt((zoffsprings - Egen(x,y))*(zoffsprings - Egen(x,y))) ;
+        if(viability_deterministic){
+          winner = which_max(viability) ;
+        } else {
+          winner = sample(seeds, 1, true, viability)[0] ;
+        }
+        Aoffsprings(x,y) = aoffsprings(winner) ;
+        Zoffsprings(x,y) = zoffsprings(winner) ;
+        
+      }
+    }
+  
+    // saving values from the generation
+    Agen = Aoffsprings ;
+    Zgen = Zoffsprings ;
+    E.row(g) = Egen ;
+    A.row(g) = Agen ;
+    Z.row(g) = Zgen ;
   }
   List sim = List::create(Named("A") = A, 
                           Named("Z") = Z,

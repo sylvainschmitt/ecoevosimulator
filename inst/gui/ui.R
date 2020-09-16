@@ -1,7 +1,7 @@
 library(ecoevosimulator)
 library(shiny)
 library(shinydashboard)
-# theme_set(bayesplot::theme_default())
+theme_set(bayesplot::theme_default())
 
 ui <- dashboardPage(
     dashboardHeader(title = "Eco-evo simulator 1D"),
@@ -10,9 +10,10 @@ ui <- dashboardPage(
                       height: 90vh; overflow-y: auto;
                     }"))), 
         actionButton("simulate", "Simulate", icon = icon("recycle"), width = "200px"),
+        actionButton("quit", "Quit", icon = icon("sign-out-alt"), width = "200px"),
         checkboxInput("viability_deterministic", "Determinist/Probabilist viability", value = TRUE),
-        sliderInput("Nind", "Number of individuals:",
-                    min = 1, max = 100, value = 50),
+        sliderInput("grid", "Number of cells per side:",
+                    min = 1, max = 100, value = 20),
         sliderInput("Ngen", "Number of generations:",
                     min = 1, max = 500, value = 50),
         sliderInput("muG", "Genetic mean:",
@@ -23,8 +24,8 @@ ui <- dashboardPage(
                     min = -10, max = 10, value = 0),
         sliderInput("sigmaE", "Environmental variance:",
                     min = 0, max = 10, value = 1),
-        sliderInput("gradientlim", "Environmental gradient size:",
-                    min = 0, max = 100, value = 10),
+        sliderInput("Elim", "Environmental gradient size:",
+                    min = 0, max = 100, value = 5),
         sliderInput("seedlings", "Seedlings:",
                     min = 0, max = 50, value = 4),
         sliderInput("dispersal", "Dispersal:",

@@ -8,31 +8,48 @@ using namespace Rcpp;
 //' 
 //' @name disperse
 //' 
-//' @param a int. Final dispesal position
+//' @param xa IntegerVector. Final dispesal positions
 //' @param d int. Dispersal distance
-//' @param xmin int. Minimum cell coordinate
-//' @param xmax int. Maximum cell coordinate
+//' @param xmin int. Minimum row
+//' @param xmax int. Maximum row
+//' @param ymin int. Minimum column
+//' @param ymax int. Maximum column
 //' 
 //' @examples
-//' disperse(10, 10)
+//' disperse(c(10, 10), 2, 0, 20, 0, 20)
 //' 
 //' @export
 // [[Rcpp::export]]
-int disperse(
-    int a,
+IntegerVector disperse(
+    IntegerVector a,
     int d,
     int xmin,
-    int xmax
+    int xmax,
+    int ymin,
+    int ymax
 ){
-  int bmin = xmin ;
-  int bmax = xmax ;
-  if(a-d > xmin){
-    bmin = a-d ;
-  } 
-  if(a+d+1 < xmax){
-    bmax = a+d+1 ;
-  } 
-  IntegerVector posb = seq(bmin, bmax) ;
-  int b = sample(posb, 1)[0] ; // beware uniform sampling
+  int xbmin = xmin ;
+  int xbmax = xmax ;
+  int ybmin = ymin ;
+  int ybmax = ymax ;
+  IntegerVector b(2) ;
+  double r ;
+  if(a[0]-d > xmin)
+    xbmin = a[0]-d ;
+  if(a[0]+d+1 < xmax)
+    xbmax = a[0]+d+1 ;
+  if(a[1]-d > ymin)
+    ybmin = a[1]-d ;
+  if(a[1]+d+1 < ymax)
+    ybmax = a[1]+d+1 ;
+  IntegerVector posxb = seq(xbmin, xbmax) ;
+  IntegerVector posyb = seq(ybmin, ybmax) ;
+  for(int i = 0; i < pow(10,d); i++){
+    b[0] = sample(posxb, 1)[0] ; // beware uniform sampling
+    b[1] = sample(posyb, 1)[0] ; // beware uniform sampling
+    r = sqrt((a[0]-b[0])*(a[0]-b[0])+(a[1]-b[1])*(a[1]-b[1])) ;
+    // Rcout << "a = (" << a[0] << "," << a[1] << "); b = (" << b[0] << "," << b[1] << "); r = " << r << "\n" ;
+    if(r > 0 && r <= d) break ;
+  }
   return b ;
 }

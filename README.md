@@ -20,8 +20,6 @@ plotSim(simulator())
 
 ## ToDo
 
-* 2d dispersal kernel
-* viability
 * lognormal distribution
 * non-overlapping generations (background and treefall mortality)
 * topography generator

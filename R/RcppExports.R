@@ -8,17 +8,19 @@
 #' 
 #' @name disperse
 #' 
-#' @param a int. Final dispesal position
+#' @param xa IntegerVector. Final dispesal positions
 #' @param d int. Dispersal distance
-#' @param xmin int. Minimum cell coordinate
-#' @param xmax int. Maximum cell coordinate
+#' @param xmin int. Minimum row
+#' @param xmax int. Maximum row
+#' @param ymin int. Minimum column
+#' @param ymax int. Maximum column
 #' 
 #' @examples
-#' disperse(10, 10)
+#' disperse(c(10, 10), 2, 0, 20, 0, 20)
 #' 
 #' @export
-disperse <- function(a, d, xmin, xmax) {
-    .Call(`_ecoevosimulator_disperse`, a, d, xmin, xmax)
+disperse <- function(a, d, xmin, xmax, ymin, ymax) {
+    .Call(`_ecoevosimulator_disperse`, a, d, xmin, xmax, ymin, ymax)
 }
 
 #' @title Build gradient

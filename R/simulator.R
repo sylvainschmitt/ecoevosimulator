@@ -5,7 +5,7 @@ NULL
 
 #' simulator
 #' 
-#' @param grid int.  Number of cell per side of the environmental matrix
+#' @param grid int.  Number of cells per side of the environmental matrix
 #' @param Ngen int. Number of generations
 #' @param muG double. Mean of genetic values
 #' @param sigmaG double. Variance of genetic values
