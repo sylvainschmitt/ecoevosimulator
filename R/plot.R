@@ -45,6 +45,7 @@ plotSim <- function(simulation, gen = 1){
 #' plotEnv(simulator())
 #' 
 plotEnv <- function(simulation, gen = 1){
+  X <- Y <- value <- generation <- individual <- var <- NULL
   filter(simulation, 
          var == "ecotype", 
          generation == gen) %>%
@@ -66,6 +67,7 @@ plotEnv <- function(simulation, gen = 1){
 #' plotMaps(simulator())
 #' 
 plotMaps <- function(simulation){
+  X <- Y <- value <- generation <- individual <- var <- NULL
   filter(simulation, 
          var != "ecotype",
          generation %in% c(1, floor(max(simulation$generation)/2), max(simulation$generation))) %>% 
@@ -89,6 +91,7 @@ plotMaps <- function(simulation){
 #' plotTrajectories(simulator())
 #' 
 plotTrajectories <- function(simulation){
+  X <- Y <- value <- generation <- individual <- ecotype <- NULL
   dcast(simulation, generation + individual + X + Y ~ var) %>%
     melt(id.vars = c("generation", "individual", "X", "Y", "ecotype")) %>% 
     ggplot(aes(generation, value, 

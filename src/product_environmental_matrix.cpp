@@ -12,7 +12,7 @@ using namespace Rcpp;
 //' @param length int. Number of cells
 //' 
 //' @examples
-//' build_gradient(10, 10)
+//' product_environmental_matrix(10, 10)
 //' 
 //' @export
 // [[Rcpp::export]]

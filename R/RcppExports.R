@@ -8,7 +8,7 @@
 #' 
 #' @name disperse
 #' 
-#' @param xa IntegerVector. Final dispesal positions
+#' @param a IntegerVector. Final dispesal positions
 #' @param d int. Dispersal distance
 #' @param xmin int. Minimum row
 #' @param xmax int. Maximum row
@@ -34,7 +34,7 @@ disperse <- function(a, d, xmin, xmax, ymin, ymax) {
 #' @param length int. Number of cells
 #' 
 #' @examples
-#' build_gradient(10, 10)
+#' product_environmental_matrix(10, 10)
 #' 
 #' @export
 product_environmental_matrix <- function(gradientlim, length) {
@@ -62,7 +62,7 @@ product_environmental_matrix <- function(gradientlim, length) {
 #' @return A lsit.
 #' 
 #' @examples
-#' simulator()
+#' simulatorCpp()
 #' 
 #' @export
 simulatorCpp <- function(grid = 20L, Ngen = 50L, muG = 0, sigmaG = 1, muE = 0, sigmaE = 1, Elim = 5, seedlings = 4L, dispersal = 1L, viability_deterministic = TRUE) {

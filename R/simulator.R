@@ -36,6 +36,7 @@ simulator <- function(
   dispersal = 1,
   viability_deterministic = TRUE
 ){
+  Var1 <- Var2 <- NULL
   sim <- simulatorCpp(grid, Ngen, muG, sigmaG, muE, sigmaE, Elim, seedlings, dispersal, viability_deterministic)
   coords <- data.frame(
     individual = 1:(grid*grid),

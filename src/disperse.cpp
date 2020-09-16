@@ -8,7 +8,7 @@ using namespace Rcpp;
 //' 
 //' @name disperse
 //' 
-//' @param xa IntegerVector. Final dispesal positions
+//' @param a IntegerVector. Final dispesal positions
 //' @param d int. Dispersal distance
 //' @param xmin int. Minimum row
 //' @param xmax int. Maximum row

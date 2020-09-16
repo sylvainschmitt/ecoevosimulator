@@ -9,7 +9,7 @@ simulator(grid = 20, Ngen = 50, muG = 0, sigmaG = 1, muE = 0,
   viability_deterministic = TRUE)
 }
 \arguments{
-\item{grid}{int.  Number of cell per side of the environmental matrix}
+\item{grid}{int.  Number of cells per side of the environmental matrix}
 
 \item{Ngen}{int. Number of generations}
 

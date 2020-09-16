@@ -16,6 +16,6 @@ product_environmental_matrix(gradientlim, length)
 C++ code to build environmental gradients
 }
 \examples{
-build_gradient(10, 10)
+product_environmental_matrix(10, 10)
 
 }

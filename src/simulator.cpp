@@ -24,7 +24,7 @@ using namespace Rcpp;
 //' @return A lsit.
 //' 
 //' @examples
-//' simulator()
+//' simulatorCpp()
 //' 
 //' @export
 // [[Rcpp::export]]

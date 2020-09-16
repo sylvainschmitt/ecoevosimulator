@@ -7,7 +7,7 @@
 gui()
 }
 \value{
-
+An html user interface.
 }
 \description{
 Global User Interface

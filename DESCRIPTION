@@ -2,10 +2,11 @@ Package: ecoevosimulator
 Type: Package
 Title: Eco-evolutionnary simulator
 Version: 1.0.9001
-Date: 2020-07-21
 Author: Sylvain Schmitt
 Maintainer: Sylvain Schmitt <sylvain.m.schmitt@gmail.com>
 Description: Simulating eco-evolutionnary dynamics of virtual populations with topography and forest gap dynamics.
+URL: https://sylvainschmitt.github.io/ecoevosimulator
+BugReports: https://github.com/sylvainschmitt/ecoevosimulator/issues
 License: GPL-3
 Imports: 
     Rcpp (>= 1.0.1),
@@ -14,7 +15,6 @@ Imports:
     dplyr (>= 0.8.1),
     viridis (>= 0.5.1),
     shiny (>= 1.3.2),
-    shinydashboard (>= 0.7.1),
     reshape2 (>= 1.4.3),
     gridExtra (>= 2.3)
 LinkingTo: Rcpp
@@ -28,7 +28,7 @@ Collate:
     'simulator.R'
 Suggests: 
     testthat (>= 2.1.0),
-    knitr,
-    rmarkdown,
-    covr
+    shinydashboard (>= 0.7.1),
+    knitr (>= 1.2.8),
+    rmarkdown (>= 2.2)
 VignetteBuilder: knitr

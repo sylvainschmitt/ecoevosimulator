@@ -1,6 +1,6 @@
 #' Global User Interface
 #'
-#' @return
+#' @return An html user interface.
 #' 
 #' @export
 #'
