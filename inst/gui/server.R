@@ -6,7 +6,7 @@ library(shinydashboard)
 server <- function(input, output) {
     observeEvent(input$simulate, {
         output$simulator = renderPlot(height = 600,
-                                      plotSim1D(simulator1D_cpp(Nind = input$Nind,
+                                      plotSim(simulator(Nind = input$Nind,
                                                                 Ngen = input$Ngen,
                                                                 muG = input$muG,
                                                                 sigmaG = input$sigmaG,

@@ -17,6 +17,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// disperse
+int disperse(int a, int d, int xmin, int xmax);
+RcppExport SEXP _ecoevosimulator_disperse(SEXP aSEXP, SEXP dSEXP, SEXP xminSEXP, SEXP xmaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type a(aSEXP);
+    Rcpp::traits::input_parameter< int >::type d(dSEXP);
+    Rcpp::traits::input_parameter< int >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< int >::type xmax(xmaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(disperse(a, d, xmin, xmax));
+    return rcpp_result_gen;
+END_RCPP
+}
 // simulatorCpp
 List simulatorCpp(int Nind, int Ngen, double muG, double sigmaG, double muE, double sigmaE, double Elim, int seedlings, int dispersal, bool viability_deterministic);
 RcppExport SEXP _ecoevosimulator_simulatorCpp(SEXP NindSEXP, SEXP NgenSEXP, SEXP muGSEXP, SEXP sigmaGSEXP, SEXP muESEXP, SEXP sigmaESEXP, SEXP ElimSEXP, SEXP seedlingsSEXP, SEXP dispersalSEXP, SEXP viability_deterministicSEXP) {
@@ -40,6 +54,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ecoevosimulator_build_gradient", (DL_FUNC) &_ecoevosimulator_build_gradient, 2},
+    {"_ecoevosimulator_disperse", (DL_FUNC) &_ecoevosimulator_disperse, 4},
     {"_ecoevosimulator_simulatorCpp", (DL_FUNC) &_ecoevosimulator_simulatorCpp, 10},
     {NULL, NULL, 0}
 };

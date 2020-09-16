@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 #include "build_gradient.h"
+#include "disperse.h"  
 using namespace Rcpp;
 
 //' @title simulator C++
@@ -39,42 +40,23 @@ List simulatorCpp(
     int dispersal = 1,
     bool viability_deterministic = true
 ) {
-  NumericMatrix A(Ngen, Nind) ;
-  NumericMatrix Z(Ngen, Nind) ;
-  NumericVector E = build_gradient(Elim, Nind) ;
-  NumericMatrix Aoffsprings(Nind, seedlings) ;
-  NumericMatrix Zoffsprings(Nind, seedlings) ;
-  NumericVector w(seedlings) ;
-  IntegerVector seeds(seedlings) ;
-  int imin , imax, winner ;
+  NumericMatrix A(Ngen, Nind) ; // genetic values
+  NumericMatrix Z(Ngen, Nind) ; // phenotypic values
+  NumericVector E = build_gradient(Elim, Nind) ; // Environmental gradient
+  NumericMatrix Aoffsprings(Nind, seedlings) ; // Offspring genetic values for one generation
+  NumericMatrix Zoffsprings(Nind, seedlings) ; // Offspring phenotypic values for one generation
+  NumericVector w(seedlings) ; // Seedlings probabilities for one cell
+  IntegerVector seeds = seq(0, seedlings) ; // seedlings for one cell
+  int mother, father, winner ; // mother, father and winner positions
   double muS ;
-  A.row(0) = rnorm(Nind, muG, sigmaG) ; 
+  A.row(0) = rnorm(Nind, muG, sigmaG) ;   // Gradient init with random draw
   Z.row(0) = rnorm(Nind, muE, sigmaE) ;
-  for(int s = 0; s < seedlings; s++)
-    seeds(s) = s ;
-  for (int g = 1; g < Ngen; g++){
-    for (int i = 0; i < Nind; i++){
-      imin = 0 ;
-      imax = Nind ;
-      if(i-dispersal > 0){
-        imin = i-dispersal ;
-      } 
-      if(i+dispersal+1 < Nind){
-        imax = i+dispersal+1 ;
-      }
-      NumericVector Am(imax-imin) ;
-      IntegerVector Pm(imax-imin) ;
-      for(int m = 0; m < imax-imin; m++){
-        Pm(m) = m ;
-        Am(m) = A(g-1,imin+m) ;
-      } 
+  for (int g = 1; g < Ngen; g++){ // gens
+    for (int i = 0; i < Nind; i++){ // inds
       for (int s = 0; s < seedlings; s++){
-        int M = sample(Pm, 1)[0] ;
-        NumericVector Af(imax-imin) ; // imax and imin to be redefined
-        for(int m = 0; m < imax-imin; m++){
-          Af(m) = A(g-1,imin+m) ;
-        } 
-        Aoffsprings(i,s) = rnorm(1, (Am[M] + sample(Af, 1)[0])/2, sigmaG/2)[0] ;
+        mother = disperse(i, dispersal, 0, Nind) ;
+        father = disperse(mother, dispersal, 0, Nind) ;
+        Aoffsprings(i,s) = rnorm(1, (A(g-1,mother) + A(g-1,father))/2, sigmaG/2)[0] ;
         Zoffsprings(i,s) = Aoffsprings(i,s) + rnorm(1, muE, sigmaE)[0] ;
       }
       if(viability_deterministic){

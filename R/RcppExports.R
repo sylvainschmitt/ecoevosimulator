@@ -19,6 +19,26 @@ build_gradient <- function(gradientlim, length) {
     .Call(`_ecoevosimulator_build_gradient`, gradientlim, length)
 }
 
+#' @title Disperse
+#' 
+#' @description
+#' C++ code for dispersal
+#' 
+#' @name disperse
+#' 
+#' @param a int. Final dispesal position
+#' @param d int. Dispersal distance
+#' @param xmin int. Minimum cell coordinate
+#' @param xmax int. Maximum cell coordinate
+#' 
+#' @examples
+#' disperse(10, 10)
+#' 
+#' @export
+disperse <- function(a, d, xmin, xmax) {
+    .Call(`_ecoevosimulator_disperse`, a, d, xmin, xmax)
+}
+
 #' @title simulator C++
 #' 
 #' @description
