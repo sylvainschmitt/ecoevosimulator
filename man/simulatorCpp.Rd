@@ -4,12 +4,12 @@
 \alias{simulatorCpp}
 \title{simulator C++}
 \usage{
-simulatorCpp(Nind = 50L, Ngen = 50L, muG = 0, sigmaG = 1,
-  muE = 0, sigmaE = 1, Elim = 10, seedlings = 4L, dispersal = 1L,
+simulatorCpp(grid = 20L, Ngen = 50L, muG = 0, sigmaG = 1,
+  muE = 0, sigmaE = 1, Elim = 5, seedlings = 4L, dispersal = 1L,
   viability_deterministic = TRUE)
 }
 \arguments{
-\item{Nind}{int. Number of individuals}
+\item{grid}{int. Number of cell per side of the environmental matrix}
 
 \item{Ngen}{int. Number of generations}
 

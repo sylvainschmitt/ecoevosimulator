@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A short title line describing what the package does — symsympho-package • ecoevosimulator</title>
+<title>plotEnv — plotEnv • ecoevosimulator</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -36,10 +36,9 @@
 
 
 
-<meta property="og:title" content="A short title line describing what the package does — symsympho-package" />
+<meta property="og:title" content="plotEnv — plotEnv" />
 
-<meta property="og:description" content="A more detailed description of what the package does. A length
-  of about one to five lines is recommended." />
+<meta property="og:description" content="plotEnv" />
 
 
 
@@ -119,39 +118,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A short title line describing what the package does</h1>
+    <h1>plotEnv</h1>
     
-    <div class="hidden name"><code>symsympho-package.Rd</code></div>
+    <div class="hidden name"><code>plotEnv.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A more detailed description of what the package does. A length
-  of about one to five lines is recommended.</p>
+    <p>plotEnv</p>
     
     </div>
 
-        
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This section should provide a more detailed overview of how to use the
-  package, including the most important functions.</p>
+    <pre class="usage"><span class='fu'>plotEnv</span>(<span class='no'>simulation</span>, <span class='kw'>gen</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>This optional section can contain literature or other references for
-  background information.</p>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>simulation</th>
+      <td><p>df.  result from simulator function</p></td>
+    </tr>
+    <tr>
+      <th>gen</th>
+      <td><p>int.  generation to be plotted</p></td>
+    </tr>
+    </table>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>Optional links to other man pages</p></div>
+    <p>A ggplot.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-     <span class='co'>## Optional simple examples of the most important functions</span>
-     <span class='co'>## These can be in \dontrun{} and \donttest{} blocks.   </span>
-  }</div></pre>
+    <pre class="examples"><div class='input'>
+<span class='fu'>plotEnv</span>(<span class='fu'><a href='simulator.html'>simulator</a></span>())</div><div class='img'><img src='plotEnv-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

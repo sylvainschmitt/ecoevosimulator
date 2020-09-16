@@ -4,12 +4,12 @@
 \alias{simulator}
 \title{simulator}
 \usage{
-simulator(Nind = 50, Ngen = 50, muG = 0, sigmaG = 1, muE = 0,
-  sigmaE = 1, Elim = 10, seedlings = 4, dispersal = 1,
+simulator(grid = 20, Ngen = 50, muG = 0, sigmaG = 1, muE = 0,
+  sigmaE = 1, Elim = 5, seedlings = 4, dispersal = 1,
   viability_deterministic = TRUE)
 }
 \arguments{
-\item{Nind}{int. Number of individuals}
+\item{grid}{int.  Number of cell per side of the environmental matrix}
 
 \item{Ngen}{int. Number of generations}
 

@@ -5,18 +5,6 @@
 
 using namespace Rcpp;
 
-// build_gradient
-NumericVector build_gradient(double gradientlim, int length);
-RcppExport SEXP _ecoevosimulator_build_gradient(SEXP gradientlimSEXP, SEXP lengthSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type gradientlim(gradientlimSEXP);
-    Rcpp::traits::input_parameter< int >::type length(lengthSEXP);
-    rcpp_result_gen = Rcpp::wrap(build_gradient(gradientlim, length));
-    return rcpp_result_gen;
-END_RCPP
-}
 // disperse
 int disperse(int a, int d, int xmin, int xmax);
 RcppExport SEXP _ecoevosimulator_disperse(SEXP aSEXP, SEXP dSEXP, SEXP xminSEXP, SEXP xmaxSEXP) {
@@ -31,13 +19,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// simulatorCpp
-List simulatorCpp(int Nind, int Ngen, double muG, double sigmaG, double muE, double sigmaE, double Elim, int seedlings, int dispersal, bool viability_deterministic);
-RcppExport SEXP _ecoevosimulator_simulatorCpp(SEXP NindSEXP, SEXP NgenSEXP, SEXP muGSEXP, SEXP sigmaGSEXP, SEXP muESEXP, SEXP sigmaESEXP, SEXP ElimSEXP, SEXP seedlingsSEXP, SEXP dispersalSEXP, SEXP viability_deterministicSEXP) {
+// product_environmental_matrix
+NumericMatrix product_environmental_matrix(double gradientlim, int length);
+RcppExport SEXP _ecoevosimulator_product_environmental_matrix(SEXP gradientlimSEXP, SEXP lengthSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type Nind(NindSEXP);
+    Rcpp::traits::input_parameter< double >::type gradientlim(gradientlimSEXP);
+    Rcpp::traits::input_parameter< int >::type length(lengthSEXP);
+    rcpp_result_gen = Rcpp::wrap(product_environmental_matrix(gradientlim, length));
+    return rcpp_result_gen;
+END_RCPP
+}
+// simulatorCpp
+List simulatorCpp(int grid, int Ngen, double muG, double sigmaG, double muE, double sigmaE, double Elim, int seedlings, int dispersal, bool viability_deterministic);
+RcppExport SEXP _ecoevosimulator_simulatorCpp(SEXP gridSEXP, SEXP NgenSEXP, SEXP muGSEXP, SEXP sigmaGSEXP, SEXP muESEXP, SEXP sigmaESEXP, SEXP ElimSEXP, SEXP seedlingsSEXP, SEXP dispersalSEXP, SEXP viability_deterministicSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type grid(gridSEXP);
     Rcpp::traits::input_parameter< int >::type Ngen(NgenSEXP);
     Rcpp::traits::input_parameter< double >::type muG(muGSEXP);
     Rcpp::traits::input_parameter< double >::type sigmaG(sigmaGSEXP);
@@ -47,14 +47,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type seedlings(seedlingsSEXP);
     Rcpp::traits::input_parameter< int >::type dispersal(dispersalSEXP);
     Rcpp::traits::input_parameter< bool >::type viability_deterministic(viability_deterministicSEXP);
-    rcpp_result_gen = Rcpp::wrap(simulatorCpp(Nind, Ngen, muG, sigmaG, muE, sigmaE, Elim, seedlings, dispersal, viability_deterministic));
+    rcpp_result_gen = Rcpp::wrap(simulatorCpp(grid, Ngen, muG, sigmaG, muE, sigmaE, Elim, seedlings, dispersal, viability_deterministic));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_ecoevosimulator_build_gradient", (DL_FUNC) &_ecoevosimulator_build_gradient, 2},
     {"_ecoevosimulator_disperse", (DL_FUNC) &_ecoevosimulator_disperse, 4},
+    {"_ecoevosimulator_product_environmental_matrix", (DL_FUNC) &_ecoevosimulator_product_environmental_matrix, 2},
     {"_ecoevosimulator_simulatorCpp", (DL_FUNC) &_ecoevosimulator_simulatorCpp, 10},
     {NULL, NULL, 0}
 };

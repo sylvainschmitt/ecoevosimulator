@@ -2,9 +2,10 @@
 % Please edit documentation in R/RcppExports.R
 \name{build_gradient}
 \alias{build_gradient}
+\alias{product_environmental_matrix}
 \title{Build gradient}
 \usage{
-build_gradient(gradientlim, length)
+product_environmental_matrix(gradientlim, length)
 }
 \arguments{
 \item{gradientlim}{double. Environmental gradient size}

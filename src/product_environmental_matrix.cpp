@@ -16,14 +16,20 @@ using namespace Rcpp;
 //' 
 //' @export
 // [[Rcpp::export]]
-NumericVector build_gradient(
+NumericMatrix product_environmental_matrix(
     double gradientlim,
     int length
 ){
   double step = gradientlim*2/(length-1) ;
   NumericVector gradient(length) ;
+  NumericMatrix E(length, length) ;
   gradient[0] = - gradientlim ;
-  for (int i = 1; i < length; i++)
+  for(int i = 1; i < length; i++)
     gradient[i] = gradient[i-1] + step ;
-  return gradient ;
+  for(int i = 0; i < length; i++){
+    for(int j = 0; j < length; j++){
+      E(i,j) = gradient[i]*gradient[j] ;
+    }
+  }
+  return E ;
 }
