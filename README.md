@@ -18,6 +18,10 @@ library(ecoevosimulator)
 plotSim(simulator())
 ```
 
+## Online
+
+https://sylvainschmitt.shinyapps.io/ecoevosimulator/
+
 ## ToDo
 
 * lognormal distribution
