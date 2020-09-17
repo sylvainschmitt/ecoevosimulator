@@ -1,5 +1,6 @@
 # ecoevosimulator 1.0.9003
 * fixed issue
+* gifMaps
 
 # ecoevosimulator 1.0.9002
 * 2d dispersal kernel

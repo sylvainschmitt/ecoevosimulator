@@ -32,5 +32,6 @@ Suggests:
     testthat (>= 2.1.0),
     shinydashboard (>= 0.7.1),
     knitr (>= 1.2.8),
-    rmarkdown (>= 2.2)
+    rmarkdown (>= 2.2),
+    bayesplot (>= 1.7.0)
 VignetteBuilder: knitr
