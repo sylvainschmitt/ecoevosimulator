@@ -36,6 +36,6 @@ A lsit.
 Eco-evolutionary simulator in C++.
 }
 \examples{
-simulator()
+simulatorCpp()
 
 }

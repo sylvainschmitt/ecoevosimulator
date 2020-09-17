@@ -77,9 +77,9 @@ List simulatorCpp(
         individual[1] = y ;
         // dispersal
         for (int s = 0; s < seedlings; s++){
-          mother = disperse(individual, dispersal, 0, grid, 0, grid) ;
-          father = disperse(mother, dispersal, 0, grid, 0, grid) ;
-          aoffsprings(s) = rnorm(1, (A(mother[0],mother[1]) + A(father[0],father[1]))/2, sigmaG/2)[0] ;
+          mother = disperse(individual, dispersal, 0, grid-1, 0, grid-1) ;
+          father = disperse(mother, dispersal, 0, grid-1, 0, grid-1) ;
+          aoffsprings(s) = rnorm(1, (Agen(mother[0],mother[1]) + Agen(father[0],father[1]))/2, sigmaG/2)[0] ;
           zoffsprings(s) = aoffsprings(s) + rnorm(1, muE, sigmaE)[0] ;
         }
 
@@ -92,7 +92,6 @@ List simulatorCpp(
         }
         Aoffsprings(x,y) = aoffsprings(winner) ;
         Zoffsprings(x,y) = zoffsprings(winner) ;
-        
       }
     }
   

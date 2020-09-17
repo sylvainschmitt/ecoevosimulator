@@ -15,7 +15,7 @@ devtools::install_github("sylvainschmitt/ecoevosimulator")
 
 ```
 library(ecoevosimulator)
-plotSim(simulator())
+gui()
 ```
 
 ## Online
@@ -29,3 +29,4 @@ https://sylvainschmitt.shinyapps.io/ecoevosimulator/
 * topography generator
 * forest gap dynamics generator
 * explore hypotheses
+* shinyapps integration

@@ -5,7 +5,7 @@ library(ggplot2)
 theme_set(bayesplot::theme_default())
 
 ui <- dashboardPage(
-    dashboardHeader(title = "Eco-evo simulator 1D"),
+    dashboardHeader(title = "Eco-evo simulator"),
     dashboardSidebar(
         tags$head(tags$style(HTML(".sidebar {
                       height: 90vh; overflow-y: auto;

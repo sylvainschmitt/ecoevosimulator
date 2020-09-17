@@ -100,5 +100,3 @@ plotTrajectories <- function(simulation){
     facet_wrap(~ variable) +
     viridis::scale_color_viridis(guide = "none")
 }
-
-
