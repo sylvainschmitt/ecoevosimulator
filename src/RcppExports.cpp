@@ -21,6 +21,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// forestgapdynamics
+NumericMatrix forestgapdynamics(int grid, int radius, double probability);
+RcppExport SEXP _ecoevosimulator_forestgapdynamics(SEXP gridSEXP, SEXP radiusSEXP, SEXP probabilitySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type grid(gridSEXP);
+    Rcpp::traits::input_parameter< int >::type radius(radiusSEXP);
+    Rcpp::traits::input_parameter< double >::type probability(probabilitySEXP);
+    rcpp_result_gen = Rcpp::wrap(forestgapdynamics(grid, radius, probability));
+    return rcpp_result_gen;
+END_RCPP
+}
 // product_environmental_matrix
 NumericMatrix product_environmental_matrix(double gradientlim, int length);
 RcppExport SEXP _ecoevosimulator_product_environmental_matrix(SEXP gradientlimSEXP, SEXP lengthSEXP) {
@@ -34,8 +47,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // simulatorCpp
-List simulatorCpp(int grid, int Ngen, double muG, double sigmaG, double muE, double sigmaE, double Elim, int seedlings, int dispersal, bool viability_deterministic);
-RcppExport SEXP _ecoevosimulator_simulatorCpp(SEXP gridSEXP, SEXP NgenSEXP, SEXP muGSEXP, SEXP sigmaGSEXP, SEXP muESEXP, SEXP sigmaESEXP, SEXP ElimSEXP, SEXP seedlingsSEXP, SEXP dispersalSEXP, SEXP viability_deterministicSEXP) {
+List simulatorCpp(int grid, int Ngen, double muG, double sigmaG, double muE, double sigmaE, double Elim, int seedlings, int dispersal, int gapradius, double fallprobability, double death, bool viability_deterministic);
+RcppExport SEXP _ecoevosimulator_simulatorCpp(SEXP gridSEXP, SEXP NgenSEXP, SEXP muGSEXP, SEXP sigmaGSEXP, SEXP muESEXP, SEXP sigmaESEXP, SEXP ElimSEXP, SEXP seedlingsSEXP, SEXP dispersalSEXP, SEXP gapradiusSEXP, SEXP fallprobabilitySEXP, SEXP deathSEXP, SEXP viability_deterministicSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -48,16 +61,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type Elim(ElimSEXP);
     Rcpp::traits::input_parameter< int >::type seedlings(seedlingsSEXP);
     Rcpp::traits::input_parameter< int >::type dispersal(dispersalSEXP);
+    Rcpp::traits::input_parameter< int >::type gapradius(gapradiusSEXP);
+    Rcpp::traits::input_parameter< double >::type fallprobability(fallprobabilitySEXP);
+    Rcpp::traits::input_parameter< double >::type death(deathSEXP);
     Rcpp::traits::input_parameter< bool >::type viability_deterministic(viability_deterministicSEXP);
-    rcpp_result_gen = Rcpp::wrap(simulatorCpp(grid, Ngen, muG, sigmaG, muE, sigmaE, Elim, seedlings, dispersal, viability_deterministic));
+    rcpp_result_gen = Rcpp::wrap(simulatorCpp(grid, Ngen, muG, sigmaG, muE, sigmaE, Elim, seedlings, dispersal, gapradius, fallprobability, death, viability_deterministic));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ecoevosimulator_disperse", (DL_FUNC) &_ecoevosimulator_disperse, 6},
+    {"_ecoevosimulator_forestgapdynamics", (DL_FUNC) &_ecoevosimulator_forestgapdynamics, 3},
     {"_ecoevosimulator_product_environmental_matrix", (DL_FUNC) &_ecoevosimulator_product_environmental_matrix, 2},
-    {"_ecoevosimulator_simulatorCpp", (DL_FUNC) &_ecoevosimulator_simulatorCpp, 10},
+    {"_ecoevosimulator_simulatorCpp", (DL_FUNC) &_ecoevosimulator_simulatorCpp, 13},
     {NULL, NULL, 0}
 };
 

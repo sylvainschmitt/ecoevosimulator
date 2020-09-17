@@ -104,7 +104,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/sylvainschmitt/ecoevosimulator/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -119,7 +124,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>simulator</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/sylvainschmitt/ecoevosimulator/blob/master/R/simulator.R'><code>R/simulator.R</code></a></small>
     <div class="hidden name"><code>simulator.Rd</code></div>
     </div>
 
@@ -131,6 +136,7 @@
 
     <pre class="usage"><span class='fu'>simulator</span>(<span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>Ngen</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>muG</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sigmaG</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>muE</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>sigmaE</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>Elim</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>seedlings</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>dispersal</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>gapradius</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>fallprobability</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>death</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
   <span class='kw'>viability_deterministic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -138,7 +144,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>grid</th>
-      <td><p>int.  Number of cell per side of the environmental matrix</p></td>
+      <td><p>int.  Number of cells per side of the environmental matrix</p></td>
     </tr>
     <tr>
       <th>Ngen</th>
@@ -171,6 +177,18 @@
     <tr>
       <th>dispersal</th>
       <td><p>int. Dispersal distance in cells</p></td>
+    </tr>
+    <tr>
+      <th>gapradius</th>
+      <td><p>int. Gaps radius</p></td>
+    </tr>
+    <tr>
+      <th>fallprobability</th>
+      <td><p>double. Gaps probability</p></td>
+    </tr>
+    <tr>
+      <th>death</th>
+      <td><p>double. Death probabilty</p></td>
     </tr>
     <tr>
       <th>viability_deterministic</th>

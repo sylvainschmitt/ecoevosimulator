@@ -31,7 +31,13 @@ ui <- dashboardPage(
         sliderInput("seedlings", "Seedlings:",
                     min = 0, max = 50, value = 4),
         sliderInput("dispersal", "Dispersal:",
-                    min = 0, max = 50, value = 1)
+                    min = 0, max = 50, value = 1),
+        sliderInput("gapradius", "Gap radius:",
+                    min = 0, max = 50, value = 2),
+        sliderInput("fallprobability", "Fall probability:",
+                    min = 0, max = 1, value = 0.01),
+        sliderInput("death", "Death rate:",
+                    min = 0, max = 1, value = 0.1)
     ),
     dashboardBody(fluidRow(plotOutput("simulator")))
 )

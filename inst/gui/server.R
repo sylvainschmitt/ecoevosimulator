@@ -15,6 +15,9 @@ server <- function(input, output) {
                                Elim = 5,
                                seedlings = 4,
                                dispersal = 1,
+                               gapradius = 2,
+                               fallprobability = 0.01,
+                               death = 0.1,
                                viability_deterministic = TRUE)
   
   observeEvent(input$simulate, {
@@ -27,6 +30,9 @@ server <- function(input, output) {
     parameters$Elim <- input$Elim
     parameters$seedlings <- input$seedlings
     parameters$dispersal <- input$dispersal
+    parameters$gapradius <- input$gapradius
+    parameters$fallprobability <- input$fallprobability
+    parameters$death <- input$death
     parameters$viability_deterministic <- input$viability_deterministic
   })
   
@@ -44,5 +50,8 @@ server <- function(input, output) {
                                                   Elim = parameters$Elim,
                                                   seedlings = parameters$seedlings,
                                                   dispersal = parameters$dispersal,
+                                                  gapradius = parameters$gapradius,
+                                                  fallprobability = parameters$fallprobability,
+                                                  death = parameters$death,
                                                   viability_deterministic = parameters$viability_deterministic)))
 }

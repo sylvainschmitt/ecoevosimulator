@@ -36,12 +36,12 @@ IntegerVector disperse(
   double r ;
   if(a[0]-d > xmin)
     xbmin = a[0]-d ;
-  if(a[0]+d+1 < xmax)
-    xbmax = a[0]+d+1 ;
+  if(a[0]+d < xmax)
+    xbmax = a[0]+d ;
   if(a[1]-d > ymin)
     ybmin = a[1]-d ;
-  if(a[1]+d+1 < ymax)
-    ybmax = a[1]+d+1 ;
+  if(a[1]+d < ymax)
+    ybmax = a[1]+d ;
   IntegerVector posxb = seq(xbmin, xbmax) ;
   IntegerVector posyb = seq(ybmin, ybmax) ;
   for(int i = 0; i < pow(10,d); i++){

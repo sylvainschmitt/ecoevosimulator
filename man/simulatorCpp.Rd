@@ -6,6 +6,7 @@
 \usage{
 simulatorCpp(grid = 20L, Ngen = 50L, muG = 0, sigmaG = 1,
   muE = 0, sigmaE = 1, Elim = 5, seedlings = 4L, dispersal = 1L,
+  gapradius = 2L, fallprobability = 0.01, death = 0.1,
   viability_deterministic = TRUE)
 }
 \arguments{
@@ -26,6 +27,12 @@ simulatorCpp(grid = 20L, Ngen = 50L, muG = 0, sigmaG = 1,
 \item{seedlings}{int. Number of seedlings per cell}
 
 \item{dispersal}{int. Dispersal distance in cells}
+
+\item{gapradius}{int. Gaps radius}
+
+\item{fallprobability}{double. Gaps probability}
+
+\item{death}{double. Death probabilty}
 
 \item{viability_deterministic}{bool. Deterministic or probabilistic vaibility}
 }

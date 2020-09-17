@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • ecoevosimulator</title>
+<title>Forest gap dynamics — forestgapdynamics • ecoevosimulator</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -36,7 +36,11 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Forest gap dynamics — forestgapdynamics" />
+
+<meta property="og:description" content="C++ code for forest gap dynamics" />
+
+
 
 
 
@@ -54,7 +58,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -119,49 +123,87 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/sylvainschmitt/ecoevosimulator/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Forest gap dynamics</h1>
+    <small class="dont-index">Source: <a href='https://github.com/sylvainschmitt/ecoevosimulator/blob/master/R/RcppExports.R'><code>R/RcppExports.R</code></a></small>
+    <div class="hidden name"><code>forestgapdynamics.Rd</code></div>
     </div>
 
-    <div id="ecoevosimulator-1-0-9004" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.9004">
-<a href="#ecoevosimulator-1-0-9004" class="anchor"></a>ecoevosimulator 1.0.9004</h1>
-<ul>
-<li>non-overlapping generations (background and treefall mortality)</li>
-</ul>
-</div>
-    <div id="ecoevosimulator-1-0-9003" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.9003">
-<a href="#ecoevosimulator-1-0-9003" class="anchor"></a>ecoevosimulator 1.0.9003</h1>
-<ul>
-<li>fixed issue</li>
-<li>gifMaps</li>
-</ul>
-</div>
-    <div id="ecoevosimulator-1-0-9002" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.9002">
-<a href="#ecoevosimulator-1-0-9002" class="anchor"></a>ecoevosimulator 1.0.9002</h1>
-<ul>
-<li>2d dispersal kernel</li>
-<li>viability</li>
-</ul>
-</div>
-    <div id="ecoevosimulator-1-0-9001" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.9001">
-<a href="#ecoevosimulator-1-0-9001" class="anchor"></a>ecoevosimulator 1.0.9001</h1>
-<ul>
-<li>2D “fixed” simulator</li>
-<li>mother and father dispersal</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    
+    <p>C++ code for forest gap dynamics</p>
+    
+    </div>
 
+    <pre class="usage"><span class='fu'>forestgapdynamics</span>(<span class='no'>grid</span>, <span class='no'>radius</span>, <span class='no'>probability</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>grid</th>
+      <td><p>int.Number of cell per side of the matrix</p></td>
+    </tr>
+    <tr>
+      <th>radius</th>
+      <td><p>int. Gaps radius</p></td>
+    </tr>
+    <tr>
+      <th>probability</th>
+      <td><p>double. Gaps probability</p></td>
+    </tr>
+    </table>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>forestgapdynamics</span>(<span class='fl'>20</span>, <span class='fl'>2</span>, <span class='fl'>0.01</span>)</div><div class='output co'>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+#&gt;  [1,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [2,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [3,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [4,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [5,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [6,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [7,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [8,]    0    0    0    0    0    1    1    1    0     0     0     0     0
+#&gt;  [9,]    0    0    0    0    0    1    1    1    0     0     0     0     0
+#&gt; [10,]    0    0    0    0    0    1    1    1    0     0     0     0     0
+#&gt; [11,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt; [12,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt; [13,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt; [14,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt; [15,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt; [16,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt; [17,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt; [18,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt; [19,]    0    0    1    1    1    0    0    0    0     0     0     0     0
+#&gt; [20,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;       [,14] [,15] [,16] [,17] [,18] [,19] [,20]
+#&gt;  [1,]     0     0     0     0     0     0     0
+#&gt;  [2,]     0     0     0     0     0     0     0
+#&gt;  [3,]     0     0     0     0     0     0     0
+#&gt;  [4,]     0     0     0     0     0     0     0
+#&gt;  [5,]     0     0     0     0     0     0     0
+#&gt;  [6,]     0     0     0     0     0     0     0
+#&gt;  [7,]     0     0     0     0     0     0     0
+#&gt;  [8,]     0     0     0     0     0     0     0
+#&gt;  [9,]     0     0     0     0     0     0     0
+#&gt; [10,]     0     0     0     0     0     0     0
+#&gt; [11,]     0     0     0     0     0     0     0
+#&gt; [12,]     0     0     0     0     0     0     0
+#&gt; [13,]     0     0     0     0     0     0     0
+#&gt; [14,]     0     0     0     0     0     0     0
+#&gt; [15,]     0     0     0     0     0     0     0
+#&gt; [16,]     0     0     0     0     0     0     0
+#&gt; [17,]     0     0     0     0     0     0     0
+#&gt; [18,]     0     0     0     1     1     1     0
+#&gt; [19,]     0     0     0     1     1     1     0
+#&gt; [20,]     0     0     0     0     0     0     0</div><div class='input'>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 

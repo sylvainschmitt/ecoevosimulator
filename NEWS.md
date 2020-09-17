@@ -1,3 +1,6 @@
+# ecoevosimulator 1.0.9004
+* non-overlapping generations (background and treefall mortality)
+
 # ecoevosimulator 1.0.9003
 * fixed issue
 * gifMaps

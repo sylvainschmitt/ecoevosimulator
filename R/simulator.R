@@ -14,6 +14,9 @@ NULL
 #' @param Elim double. Environmental gradient size
 #' @param seedlings int. Number of seedlings per cell
 #' @param dispersal int. Dispersal distance in cells
+#' @param gapradius int. Gaps radius
+#' @param fallprobability double. Gaps probability
+#' @param death double. Death probabilty
 #' @param viability_deterministic bool. Deterministic or probabilistic vaibility
 #'
 #' @return A data frame.
@@ -34,10 +37,14 @@ simulator <- function(
   Elim = 5,
   seedlings = 4,
   dispersal = 1,
+  gapradius = 2,
+  fallprobability = 0.01,
+  death = 0.1,
   viability_deterministic = TRUE
 ){
   Var1 <- Var2 <- NULL
-  sim <- simulatorCpp(grid, Ngen, muG, sigmaG, muE, sigmaE, Elim, seedlings, dispersal, viability_deterministic)
+  sim <- simulatorCpp(grid, Ngen, muG, sigmaG, muE, sigmaE, Elim, seedlings, dispersal,
+                      gapradius, fallprobability, death, viability_deterministic)
   coords <- data.frame(
     individual = 1:(grid*grid),
     X = rep(1:grid, each = grid),

@@ -6,6 +6,7 @@
 \usage{
 simulator(grid = 20, Ngen = 50, muG = 0, sigmaG = 1, muE = 0,
   sigmaE = 1, Elim = 5, seedlings = 4, dispersal = 1,
+  gapradius = 2, fallprobability = 0.01, death = 0.1,
   viability_deterministic = TRUE)
 }
 \arguments{
@@ -26,6 +27,12 @@ simulator(grid = 20, Ngen = 50, muG = 0, sigmaG = 1, muE = 0,
 \item{seedlings}{int. Number of seedlings per cell}
 
 \item{dispersal}{int. Dispersal distance in cells}
+
+\item{gapradius}{int. Gaps radius}
+
+\item{fallprobability}{double. Gaps probability}
+
+\item{death}{double. Death probabilty}
 
 \item{viability_deterministic}{bool. Deterministic or probabilistic vaibility}
 }
