@@ -9,18 +9,34 @@
 #' @name disperse
 #' 
 #' @param a IntegerVector. Final dispesal positions
-#' @param d int. Dispersal distance
-#' @param xmin int. Minimum row
-#' @param xmax int. Maximum row
-#' @param ymin int. Minimum column
-#' @param ymax int. Maximum column
+#' @param Rdispersal int. Dispersal radius in cells
+#' @param grid int. Number of cell per side of the matrix
 #' 
 #' @examples
-#' disperse(c(10, 10), 2, 0, 20, 0, 20)
+#' disperse(c(10, 10), 2, 20)
 #' 
 #' @export
-disperse <- function(a, d, xmin, xmax, ymin, ymax) {
-    .Call(`_ecoevosimulator_disperse`, a, d, xmin, xmax, ymin, ymax)
+disperse <- function(a, Rdispersal, grid) {
+    .Call(`_ecoevosimulator_disperse`, a, Rdispersal, grid)
+}
+
+#' @title Forest gap dynamics
+#' 
+#' @description
+#' C++ code for forest gap dynamics
+#' 
+#' @name forestgapdynamics
+#' 
+#' @param grid int.Number of cell per side of the matrix
+#' @param Pfall double. Treefall probability
+#' @param Rgaps int. Treefall gaps radius
+#' 
+#' @examples
+#' forestgapdynamics(20, 2, 0.01)
+#' 
+#' @export
+forestgapdynamics <- function(grid, Pfall, Rgaps) {
+    .Call(`_ecoevosimulator_forestgapdynamics`, grid, Pfall, Rgaps)
 }
 
 #' @title Build gradient
@@ -48,16 +64,19 @@ product_environmental_matrix <- function(gradientlim, length) {
 #' 
 #' @name simulatorCpp
 #' 
-#' @param grid int. Number of cell per side of the environmental matrix
-#' @param Ngen int. Number of generations
+#' @param grid int. Number of cell per side of the matrix
+#' @param Nt int. Number of time steps
+#' @param Elim double. Environmental gradient size
 #' @param muG double. Mean of genetic values
 #' @param sigmaG double. Variance of genetic values
 #' @param muE double. Mean of environmental values
 #' @param sigmaE double. Variance of environmental values
-#' @param Elim double. Environmental gradient size
-#' @param seedlings int. Number of seedlings per cell
-#' @param dispersal int. Dispersal distance in cells
-#' @param viability_deterministic bool. Deterministic or probabilistic vaibility
+#' @param Pfall double. Treefall probability
+#' @param Rgaps int. Treefall gaps radius
+#' @param Pdeath double. Background mortality probability
+#' @param Ns int. Number of seedlings per cell
+#' @param Rdispersal int. Dispersal radius in cells
+#' @param determinist bool. Deterministic or probabilistic vaibility
 #' 
 #' @return A lsit.
 #' 
@@ -65,7 +84,7 @@ product_environmental_matrix <- function(gradientlim, length) {
 #' simulatorCpp()
 #' 
 #' @export
-simulatorCpp <- function(grid = 20L, Ngen = 50L, muG = 0, sigmaG = 1, muE = 0, sigmaE = 1, Elim = 5, seedlings = 4L, dispersal = 1L, viability_deterministic = TRUE) {
-    .Call(`_ecoevosimulator_simulatorCpp`, grid, Ngen, muG, sigmaG, muE, sigmaE, Elim, seedlings, dispersal, viability_deterministic)
+simulatorCpp <- function(grid = 20L, Nt = 50L, Elim = 5, muG = 0, sigmaG = 1, muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2L, Pdeath = 0.1, Ns = 4L, Rdispersal = 1L, determinist = TRUE) {
+    .Call(`_ecoevosimulator_simulatorCpp`, grid, Nt, Elim, muG, sigmaG, muE, sigmaE, Pfall, Rgaps, Pdeath, Ns, Rdispersal, determinist)
 }
 

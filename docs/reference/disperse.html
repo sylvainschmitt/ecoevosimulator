@@ -104,7 +104,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/sylvainschmitt/ecoevosimulator/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -119,7 +124,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Disperse</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/sylvainschmitt/ecoevosimulator/blob/master/R/RcppExports.R'><code>R/RcppExports.R</code></a></small>
     <div class="hidden name"><code>disperse.Rd</code></div>
     </div>
 
@@ -129,32 +134,28 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>disperse</span>(<span class='no'>a</span>, <span class='no'>d</span>, <span class='no'>xmin</span>, <span class='no'>xmax</span>)</pre>
+    <pre class="usage"><span class='fu'>disperse</span>(<span class='no'>a</span>, <span class='no'>Rdispersal</span>, <span class='no'>grid</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>a</th>
-      <td><p>int. Final dispesal position</p></td>
+      <td><p>IntegerVector. Final dispesal positions</p></td>
     </tr>
     <tr>
-      <th>d</th>
-      <td><p>int. Dispersal distance</p></td>
+      <th>Rdispersal</th>
+      <td><p>int. Dispersal radius in cells</p></td>
     </tr>
     <tr>
-      <th>xmin</th>
-      <td><p>int. Minimum cell coordinate</p></td>
-    </tr>
-    <tr>
-      <th>xmax</th>
-      <td><p>int. Maximum cell coordinate</p></td>
+      <th>grid</th>
+      <td><p>int. Number of cell per side of the matrix</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>disperse</span>(<span class='fl'>10</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='error'>Error in disperse(10, 10): l'argument "xmin" est manquant, avec aucune valeur par défaut</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>disperse</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>10</span>), <span class='fl'>2</span>, <span class='fl'>20</span>)</div><div class='output co'>#&gt; [1]  8 10</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

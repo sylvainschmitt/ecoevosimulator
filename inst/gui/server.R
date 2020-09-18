@@ -2,47 +2,91 @@ library(ecoevosimulator)
 library(shiny)
 library(shinydashboard)
 library(ggplot2)
+library(gganimate)
 library(bayesplot)
 theme_set(bayesplot::theme_default())
 
 server <- function(input, output) {
   parameters <- reactiveValues(grid = 20,
-                               Ngen = 50,
+                               Nt = 50,
+                               Elim = 5,
                                muG = 0,
                                sigmaG = 1,
                                muE = 0,
                                sigmaE = 1,
-                               Elim = 5,
-                               seedlings = 4,
-                               dispersal = 1,
-                               viability_deterministic = TRUE)
+                               Pfall = 0.01,
+                               Rgaps = 2,
+                               Pdeath = 0.1,
+                               Ns = 4,
+                               Rdispersal = 1,
+                               determinist = TRUE)
+  
+  gif <- reactiveValues(calculate = FALSE)
   
   observeEvent(input$simulate, {
     parameters$grid <- input$grid
-    parameters$Ngen <- input$Ngen
-    parameters$muG <- input$muG
-    parameters$sigmaG <- input$sigmaG
-    parameters$muE <- input$muE
-    parameters$sigmaE <- input$sigmaE
+    parameters$Nt <- input$Nt
     parameters$Elim <- input$Elim
-    parameters$seedlings <- input$seedlings
-    parameters$dispersal <- input$dispersal
-    parameters$viability_deterministic <- input$viability_deterministic
+    parameters$sigmaG <- input$sigmaG
+    parameters$sigmaE <- input$sigmaE
+    parameters$Pfall <- input$Pfall
+    parameters$Rgaps <- input$Rgaps
+    parameters$Pdeath <- input$Pdeath
+    parameters$Ns <- input$Ns
+    parameters$Rdispersal <- input$Rdispersal
+    parameters$determinist <- input$determinist
+    gif$calculate <- FALSE
+  })
+  
+  observeEvent(input$compgif, {
+    gif$calculate <- TRUE
   })
   
   observeEvent(input$quit, {
     stopApp()
   })
- 
-  output$simulator = renderPlot(height = 700,
-                                plotSim(simulator(grid = parameters$grid,
-                                                  Ngen = parameters$Ngen,
-                                                  muG = parameters$muG,
-                                                  sigmaG = parameters$sigmaG,
-                                                  muE = parameters$muE,
-                                                  sigmaE = parameters$sigmaE,
-                                                  Elim = parameters$Elim,
-                                                  seedlings = parameters$seedlings,
-                                                  dispersal = parameters$dispersal,
-                                                  viability_deterministic = parameters$viability_deterministic)))
+  
+  output$simulator = renderPlot(plotSim(simulator(grid = parameters$grid,
+                        Nt = parameters$Nt,
+                        Elim = parameters$Elim,
+                        muG = 0,
+                        sigmaG = parameters$sigmaG,
+                        muE = 0,
+                        sigmaE = parameters$sigmaE,
+                        Pfall = parameters$Pfall,
+                        Rgaps = parameters$Rgaps,
+                        Pdeath = parameters$Pdeath,
+                        Ns = parameters$Ns,
+                        Rdispersal = parameters$Rdispersal,
+                        determinist = parameters$determinist)))
+  
+  output$gif = renderImage({
+    outfile <- tempfile(fileext='.gif')
+    if(gif$calculate){
+      p <- gifMaps(simulator(grid = parameters$grid,
+                          Nt = parameters$Nt,
+                          Elim = parameters$Elim,
+                          muG = 0,
+                          sigmaG = parameters$sigmaG,
+                          muE = 0,
+                          sigmaE = parameters$sigmaE,
+                          Pfall = parameters$Pfall,
+                          Rgaps = parameters$Rgaps,
+                          Pdeath = parameters$Pdeath,
+                          Ns = parameters$Ns,
+                          Rdispersal = parameters$Rdispersal,
+                          determinist = parameters$determinist))
+      anim_save("outfile.gif", animate(p))
+
+    } else{
+      p <- ggplot(data.frame(t = 1:2)) + 
+        theme_void() +
+        transition_time(t)
+      anim_save("outfile.gif", animate(p, 2, 2))
+    }
+    list(src = "outfile.gif",
+         contentType = 'image/gif',
+         width = 800,
+         height = 800)
+  }, deleteFile = TRUE)
 }

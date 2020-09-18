@@ -4,14 +4,16 @@
 \alias{simulator}
 \title{simulator}
 \usage{
-simulator(grid = 20, Ngen = 50, muG = 0, sigmaG = 1, muE = 0,
-  sigmaE = 1, Elim = 5, seedlings = 4, dispersal = 1,
-  viability_deterministic = TRUE)
+simulator(grid = 20, Nt = 50, Elim = 5, muG = 0, sigmaG = 1,
+  muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2, Pdeath = 0.1,
+  Ns = 4, Rdispersal = 1, determinist = TRUE)
 }
 \arguments{
-\item{grid}{int.  Number of cells per side of the environmental matrix}
+\item{grid}{int.  Number of cells per side of the matrix}
 
-\item{Ngen}{int. Number of generations}
+\item{Nt}{int. Number of time steps}
+
+\item{Elim}{double. Environmental gradient size}
 
 \item{muG}{double. Mean of genetic values}
 
@@ -21,13 +23,17 @@ simulator(grid = 20, Ngen = 50, muG = 0, sigmaG = 1, muE = 0,
 
 \item{sigmaE}{double. Variance of environmental values}
 
-\item{Elim}{double. Environmental gradient size}
+\item{Pfall}{double. Treefall probability}
 
-\item{seedlings}{int. Number of seedlings per cell}
+\item{Rgaps}{int. Treefall gaps radius}
 
-\item{dispersal}{int. Dispersal distance in cells}
+\item{Pdeath}{double. Background mortality probability}
 
-\item{viability_deterministic}{bool. Deterministic or probabilistic vaibility}
+\item{Ns}{int. Number of seedlings per cell}
+
+\item{Rdispersal}{int. Dispersal radius in cells}
+
+\item{determinist}{bool. Deterministic or probabilistic vaibility}
 }
 \value{
 A data frame.

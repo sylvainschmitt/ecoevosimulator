@@ -24,10 +24,6 @@ https://sylvainschmitt.shinyapps.io/ecoevosimulator/
 
 ## ToDo
 
-* buffer zone or thorus 
-* lognormal distribution
-* non-overlapping generations (background and treefall mortality)
 * topography generator
 * forest gap dynamics generator
 * explore hypotheses
-* shinyapps integration

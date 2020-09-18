@@ -104,7 +104,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/sylvainschmitt/ecoevosimulator/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -119,7 +124,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Build gradient</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/sylvainschmitt/ecoevosimulator/blob/master/R/RcppExports.R'><code>R/RcppExports.R</code></a></small>
     <div class="hidden name"><code>build_gradient.Rd</code></div>
     </div>
 
@@ -146,7 +151,28 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>build_gradient</span>(<span class='fl'>10</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='error'>Error in build_gradient(10, 10): impossible de trouver la fonction "build_gradient"</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>product_environmental_matrix</span>(<span class='fl'>10</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt;             [,1]       [,2]      [,3]       [,4]       [,5]       [,6]
+#&gt;  [1,]  100.00000  77.777778  55.55556  33.333333  11.111111 -11.111111
+#&gt;  [2,]   77.77778  60.493827  43.20988  25.925926   8.641975  -8.641975
+#&gt;  [3,]   55.55556  43.209877  30.86420  18.518519   6.172840  -6.172840
+#&gt;  [4,]   33.33333  25.925926  18.51852  11.111111   3.703704  -3.703704
+#&gt;  [5,]   11.11111   8.641975   6.17284   3.703704   1.234568  -1.234568
+#&gt;  [6,]  -11.11111  -8.641975  -6.17284  -3.703704  -1.234568   1.234568
+#&gt;  [7,]  -33.33333 -25.925926 -18.51852 -11.111111  -3.703704   3.703704
+#&gt;  [8,]  -55.55556 -43.209877 -30.86420 -18.518519  -6.172840   6.172840
+#&gt;  [9,]  -77.77778 -60.493827 -43.20988 -25.925926  -8.641975   8.641975
+#&gt; [10,] -100.00000 -77.777778 -55.55556 -33.333333 -11.111111  11.111111
+#&gt;             [,7]      [,8]       [,9]      [,10]
+#&gt;  [1,] -33.333333 -55.55556 -77.777778 -100.00000
+#&gt;  [2,] -25.925926 -43.20988 -60.493827  -77.77778
+#&gt;  [3,] -18.518519 -30.86420 -43.209877  -55.55556
+#&gt;  [4,] -11.111111 -18.51852 -25.925926  -33.33333
+#&gt;  [5,]  -3.703704  -6.17284  -8.641975  -11.11111
+#&gt;  [6,]   3.703704   6.17284   8.641975   11.11111
+#&gt;  [7,]  11.111111  18.51852  25.925926   33.33333
+#&gt;  [8,]  18.518519  30.86420  43.209877   55.55556
+#&gt;  [9,]  25.925926  43.20988  60.493827   77.77778
+#&gt; [10,]  33.333333  55.55556  77.777778  100.00000</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -4,14 +4,16 @@
 \alias{simulatorCpp}
 \title{simulator C++}
 \usage{
-simulatorCpp(grid = 20L, Ngen = 50L, muG = 0, sigmaG = 1,
-  muE = 0, sigmaE = 1, Elim = 5, seedlings = 4L, dispersal = 1L,
-  viability_deterministic = TRUE)
+simulatorCpp(grid = 20L, Nt = 50L, Elim = 5, muG = 0, sigmaG = 1,
+  muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2L, Pdeath = 0.1,
+  Ns = 4L, Rdispersal = 1L, determinist = TRUE)
 }
 \arguments{
-\item{grid}{int. Number of cell per side of the environmental matrix}
+\item{grid}{int. Number of cell per side of the matrix}
 
-\item{Ngen}{int. Number of generations}
+\item{Nt}{int. Number of time steps}
+
+\item{Elim}{double. Environmental gradient size}
 
 \item{muG}{double. Mean of genetic values}
 
@@ -21,13 +23,17 @@ simulatorCpp(grid = 20L, Ngen = 50L, muG = 0, sigmaG = 1,
 
 \item{sigmaE}{double. Variance of environmental values}
 
-\item{Elim}{double. Environmental gradient size}
+\item{Pfall}{double. Treefall probability}
 
-\item{seedlings}{int. Number of seedlings per cell}
+\item{Rgaps}{int. Treefall gaps radius}
 
-\item{dispersal}{int. Dispersal distance in cells}
+\item{Pdeath}{double. Background mortality probability}
 
-\item{viability_deterministic}{bool. Deterministic or probabilistic vaibility}
+\item{Ns}{int. Number of seedlings per cell}
+
+\item{Rdispersal}{int. Dispersal radius in cells}
+
+\item{determinist}{bool. Deterministic or probabilistic vaibility}
 }
 \value{
 A lsit.
