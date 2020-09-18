@@ -4,25 +4,19 @@
 \alias{disperse}
 \title{Disperse}
 \usage{
-disperse(a, d, xmin, xmax, ymin, ymax)
+disperse(a, Rdispersal, grid)
 }
 \arguments{
 \item{a}{IntegerVector. Final dispesal positions}
 
-\item{d}{int. Dispersal distance}
+\item{Rdispersal}{int. Dispersal radius in cells}
 
-\item{xmin}{int. Minimum row}
-
-\item{xmax}{int. Maximum row}
-
-\item{ymin}{int. Minimum column}
-
-\item{ymax}{int. Maximum column}
+\item{grid}{int. Number of cell per side of the matrix}
 }
 \description{
 C++ code for dispersal
 }
 \examples{
-disperse(c(10, 10), 2, 0, 20, 0, 20)
+disperse(c(10, 10), 2, 20)
 
 }

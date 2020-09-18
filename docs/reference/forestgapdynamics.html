@@ -134,7 +134,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>forestgapdynamics</span>(<span class='no'>grid</span>, <span class='no'>radius</span>, <span class='no'>probability</span>)</pre>
+    <pre class="usage"><span class='fu'>forestgapdynamics</span>(<span class='no'>grid</span>, <span class='no'>Pfall</span>, <span class='no'>Rgaps</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,12 +144,12 @@
       <td><p>int.Number of cell per side of the matrix</p></td>
     </tr>
     <tr>
-      <th>radius</th>
-      <td><p>int. Gaps radius</p></td>
+      <th>Pfall</th>
+      <td><p>double. Treefall probability</p></td>
     </tr>
     <tr>
-      <th>probability</th>
-      <td><p>double. Gaps probability</p></td>
+      <th>Rgaps</th>
+      <td><p>int. Treefall gaps radius</p></td>
     </tr>
     </table>
     
@@ -163,9 +163,9 @@
 #&gt;  [5,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 #&gt;  [6,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 #&gt;  [7,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [8,]    0    0    0    0    0    1    1    1    0     0     0     0     0
-#&gt;  [9,]    0    0    0    0    0    1    1    1    0     0     0     0     0
-#&gt; [10,]    0    0    0    0    0    1    1    1    0     0     0     0     0
+#&gt;  [8,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [9,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt; [10,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 #&gt; [11,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 #&gt; [12,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 #&gt; [13,]    0    0    0    0    0    0    0    0    0     0     0     0     0
@@ -174,7 +174,7 @@
 #&gt; [16,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 #&gt; [17,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 #&gt; [18,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt; [19,]    0    0    1    1    1    0    0    0    0     0     0     0     0
+#&gt; [19,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 #&gt; [20,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 #&gt;       [,14] [,15] [,16] [,17] [,18] [,19] [,20]
 #&gt;  [1,]     0     0     0     0     0     0     0
@@ -194,8 +194,8 @@
 #&gt; [15,]     0     0     0     0     0     0     0
 #&gt; [16,]     0     0     0     0     0     0     0
 #&gt; [17,]     0     0     0     0     0     0     0
-#&gt; [18,]     0     0     0     1     1     1     0
-#&gt; [19,]     0     0     0     1     1     1     0
+#&gt; [18,]     0     0     0     0     0     0     0
+#&gt; [19,]     0     0     0     0     0     0     0
 #&gt; [20,]     0     0     0     0     0     0     0</div><div class='input'>
 </div></pre>
   </div>

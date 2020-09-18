@@ -9,8 +9,8 @@ using namespace Rcpp;
 //' @name forestgapdynamics
 //' 
 //' @param grid int.Number of cell per side of the matrix
-//' @param radius int. Gaps radius
-//' @param probability double. Gaps probability
+//' @param Pfall double. Treefall probability
+//' @param Rgaps int. Treefall gaps radius
 //' 
 //' @examples
 //' forestgapdynamics(20, 2, 0.01)
@@ -19,30 +19,30 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 NumericMatrix forestgapdynamics(
     int grid,
-    int radius,
-    double probability
+    double Pfall,
+    int Rgaps
 ){
   NumericMatrix G(grid, grid) ;
   int xmin, xmax, ymin, ymax, r ;
   for (int x = 0; x < grid; x++){ // rows
     for (int y = 0; y < grid; y++){ // cols
-      if(runif(1)[0] <= probability){ // treefall
+      if(runif(1)[0] <= Pfall){ // treefall
         xmin = 0 ; // limits
-        xmax = grid - 1 ;
+        xmax = grid ;
         ymin = 0 ;
-        ymax = grid - 1 ;
-        if(x - radius > xmin)
-          xmin = x - radius ;
-        if(x + radius < xmax)
-          xmax = x + radius ;
-        if(y - radius > ymin)
-          ymin = y - radius ;
-        if(y + radius < ymax)
-          ymax = y + radius ;
+        ymax = grid ;
+        if(x - Rgaps > xmin)
+          xmin = x - Rgaps ;
+        if(x + Rgaps < xmax)
+          xmax = x + Rgaps ;
+        if(y - Rgaps > ymin)
+          ymin = y - Rgaps ;
+        if(y + Rgaps < ymax)
+          ymax = y + Rgaps ;
         for (int x2 = xmin; x2 < xmax; x2++){ // neighbours rows
           for (int y2 = ymin; y2 < ymax; y2++){ // neighbours cols
             r = sqrt((x-x2)*(x-x2)+(y-y2)*(y-y2)) ;
-            if(r < radius){
+            if(r < Rgaps){
               G(x2,y2) = 1 ; // killing the tree
             }
           }

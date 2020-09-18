@@ -134,7 +134,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>disperse</span>(<span class='no'>a</span>, <span class='no'>d</span>, <span class='no'>xmin</span>, <span class='no'>xmax</span>, <span class='no'>ymin</span>, <span class='no'>ymax</span>)</pre>
+    <pre class="usage"><span class='fu'>disperse</span>(<span class='no'>a</span>, <span class='no'>Rdispersal</span>, <span class='no'>grid</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,30 +144,18 @@
       <td><p>IntegerVector. Final dispesal positions</p></td>
     </tr>
     <tr>
-      <th>d</th>
-      <td><p>int. Dispersal distance</p></td>
+      <th>Rdispersal</th>
+      <td><p>int. Dispersal radius in cells</p></td>
     </tr>
     <tr>
-      <th>xmin</th>
-      <td><p>int. Minimum row</p></td>
-    </tr>
-    <tr>
-      <th>xmax</th>
-      <td><p>int. Maximum row</p></td>
-    </tr>
-    <tr>
-      <th>ymin</th>
-      <td><p>int. Minimum column</p></td>
-    </tr>
-    <tr>
-      <th>ymax</th>
-      <td><p>int. Maximum column</p></td>
+      <th>grid</th>
+      <td><p>int. Number of cell per side of the matrix</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>disperse</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>10</span>), <span class='fl'>2</span>, <span class='fl'>0</span>, <span class='fl'>20</span>, <span class='fl'>0</span>, <span class='fl'>20</span>)</div><div class='output co'>#&gt; [1]  8 10</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>disperse</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>10</span>), <span class='fl'>2</span>, <span class='fl'>20</span>)</div><div class='output co'>#&gt; [1]  8 10</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

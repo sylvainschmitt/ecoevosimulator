@@ -15,7 +15,7 @@ NULL
 #'
 #' @examples
 #' 
-#' simulation <- simulator(grid = 50, sigmaE = 0, seedlings = 10)
+#' simulation <- simulator(grid = 50)
 #' gifMaps(simulator())
 #' 
 gifMaps <- function(simulation){

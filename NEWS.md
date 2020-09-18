@@ -1,3 +1,8 @@
+# ecoevosimulator 1.0.9005
+* fixed indexing issue on border for forestgapdynamics
+* renamed parameters following bookdown document
+* gifMaps in the gui
+
 # ecoevosimulator 1.0.9004
 * non-overlapping generations (background and treefall mortality)
 

@@ -4,14 +4,14 @@
 \alias{forestgapdynamics}
 \title{Forest gap dynamics}
 \usage{
-forestgapdynamics(grid, radius, probability)
+forestgapdynamics(grid, Pfall, Rgaps)
 }
 \arguments{
 \item{grid}{int.Number of cell per side of the matrix}
 
-\item{radius}{int. Gaps radius}
+\item{Pfall}{double. Treefall probability}
 
-\item{probability}{double. Gaps probability}
+\item{Rgaps}{int. Treefall gaps radius}
 }
 \description{
 C++ code for forest gap dynamics

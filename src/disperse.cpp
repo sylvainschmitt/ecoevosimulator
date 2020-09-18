@@ -9,47 +9,40 @@ using namespace Rcpp;
 //' @name disperse
 //' 
 //' @param a IntegerVector. Final dispesal positions
-//' @param d int. Dispersal distance
-//' @param xmin int. Minimum row
-//' @param xmax int. Maximum row
-//' @param ymin int. Minimum column
-//' @param ymax int. Maximum column
+//' @param Rdispersal int. Dispersal radius in cells
+//' @param grid int. Number of cell per side of the matrix
 //' 
 //' @examples
-//' disperse(c(10, 10), 2, 0, 20, 0, 20)
+//' disperse(c(10, 10), 2, 20)
 //' 
 //' @export
 // [[Rcpp::export]]
 IntegerVector disperse(
     IntegerVector a,
-    int d,
-    int xmin,
-    int xmax,
-    int ymin,
-    int ymax
+    int Rdispersal,
+    int grid
 ){
-  int xbmin = xmin ;
-  int xbmax = xmax ;
-  int ybmin = ymin ;
-  int ybmax = ymax ;
+  int xbmin = 0 ;
+  int xbmax = grid-1 ;
+  int ybmin = 0 ;
+  int ybmax = grid-1 ;
   IntegerVector b(2) ;
   double r ;
-  if(a[0]-d > xmin)
-    xbmin = a[0]-d ;
-  if(a[0]+d < xmax)
-    xbmax = a[0]+d ;
-  if(a[1]-d > ymin)
-    ybmin = a[1]-d ;
-  if(a[1]+d < ymax)
-    ybmax = a[1]+d ;
+  if(a[0]-Rdispersal > 0)
+    xbmin = a[0]-Rdispersal ;
+  if(a[0]+Rdispersal < grid-1)
+    xbmax = a[0]+Rdispersal ;
+  if(a[1]-Rdispersal > 0)
+    ybmin = a[1]-Rdispersal ;
+  if(a[1]+Rdispersal < grid-1)
+    ybmax = a[1]+Rdispersal ;
   IntegerVector posxb = seq(xbmin, xbmax) ;
   IntegerVector posyb = seq(ybmin, ybmax) ;
-  for(int i = 0; i < pow(10,d); i++){
+  for(int i = 0; i < pow(10,Rdispersal); i++){
     b[0] = sample(posxb, 1)[0] ; // beware uniform sampling
     b[1] = sample(posyb, 1)[0] ; // beware uniform sampling
     r = sqrt((a[0]-b[0])*(a[0]-b[0])+(a[1]-b[1])*(a[1]-b[1])) ;
-    // Rcout << "a = (" << a[0] << "," << a[1] << "); b = (" << b[0] << "," << b[1] << "); r = " << r << "\n" ;
-    if(r > 0 && r <= d) break ;
+    if(r <= Rdispersal) break ;
   }
   return b ;
 }

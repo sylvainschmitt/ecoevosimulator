@@ -4,7 +4,7 @@
 #include <Rcpp.h>
 Rcpp::NumericMatrix forestgapdynamics(
     int grid,
-    int radius,
-    double probability
+    double Pfall,
+    int Rgaps
 );
 #endif

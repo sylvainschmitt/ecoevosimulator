@@ -134,21 +134,24 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>simulator</span>(<span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>Ngen</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>muG</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sigmaG</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>muE</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>sigmaE</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>Elim</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>seedlings</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>dispersal</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>gapradius</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>fallprobability</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>death</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>viability_deterministic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>simulator</span>(<span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>Nt</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>Elim</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>muG</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sigmaG</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>muE</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sigmaE</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>Pfall</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>Rgaps</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>Pdeath</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>Ns</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>Rdispersal</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>determinist</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>grid</th>
-      <td><p>int.  Number of cells per side of the environmental matrix</p></td>
+      <td><p>int.  Number of cells per side of the matrix</p></td>
     </tr>
     <tr>
-      <th>Ngen</th>
-      <td><p>int. Number of generations</p></td>
+      <th>Nt</th>
+      <td><p>int. Number of time steps</p></td>
+    </tr>
+    <tr>
+      <th>Elim</th>
+      <td><p>double. Environmental gradient size</p></td>
     </tr>
     <tr>
       <th>muG</th>
@@ -167,31 +170,27 @@
       <td><p>double. Variance of environmental values</p></td>
     </tr>
     <tr>
-      <th>Elim</th>
-      <td><p>double. Environmental gradient size</p></td>
+      <th>Pfall</th>
+      <td><p>double. Treefall probability</p></td>
     </tr>
     <tr>
-      <th>seedlings</th>
+      <th>Rgaps</th>
+      <td><p>int. Treefall gaps radius</p></td>
+    </tr>
+    <tr>
+      <th>Pdeath</th>
+      <td><p>double. Background mortality probability</p></td>
+    </tr>
+    <tr>
+      <th>Ns</th>
       <td><p>int. Number of seedlings per cell</p></td>
     </tr>
     <tr>
-      <th>dispersal</th>
-      <td><p>int. Dispersal distance in cells</p></td>
+      <th>Rdispersal</th>
+      <td><p>int. Dispersal radius in cells</p></td>
     </tr>
     <tr>
-      <th>gapradius</th>
-      <td><p>int. Gaps radius</p></td>
-    </tr>
-    <tr>
-      <th>fallprobability</th>
-      <td><p>double. Gaps probability</p></td>
-    </tr>
-    <tr>
-      <th>death</th>
-      <td><p>double. Death probabilty</p></td>
-    </tr>
-    <tr>
-      <th>viability_deterministic</th>
+      <th>determinist</th>
       <td><p>bool. Deterministic or probabilistic vaibility</p></td>
     </tr>
     </table>

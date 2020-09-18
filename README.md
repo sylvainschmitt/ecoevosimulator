@@ -24,7 +24,6 @@ https://sylvainschmitt.shinyapps.io/ecoevosimulator/
 
 ## ToDo
 
-* buffer zone or thorus 
 * topography generator
 * forest gap dynamics generator
 * explore hypotheses

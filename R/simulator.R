@@ -5,19 +5,19 @@ NULL
 
 #' simulator
 #' 
-#' @param grid int.  Number of cells per side of the environmental matrix
-#' @param Ngen int. Number of generations
+#' @param grid int.  Number of cells per side of the matrix
+#' @param Nt int. Number of time steps
+#' @param Elim double. Environmental gradient size
 #' @param muG double. Mean of genetic values
 #' @param sigmaG double. Variance of genetic values
 #' @param muE double. Mean of environmental values
 #' @param sigmaE double. Variance of environmental values
-#' @param Elim double. Environmental gradient size
-#' @param seedlings int. Number of seedlings per cell
-#' @param dispersal int. Dispersal distance in cells
-#' @param gapradius int. Gaps radius
-#' @param fallprobability double. Gaps probability
-#' @param death double. Death probabilty
-#' @param viability_deterministic bool. Deterministic or probabilistic vaibility
+#' @param Pfall double. Treefall probability
+#' @param Rgaps int. Treefall gaps radius
+#' @param Pdeath double. Background mortality probability
+#' @param Ns int. Number of seedlings per cell
+#' @param Rdispersal int. Dispersal radius in cells
+#' @param determinist bool. Deterministic or probabilistic vaibility
 #'
 #' @return A data frame.
 #' 
@@ -29,22 +29,25 @@ NULL
 #' 
 simulator <- function(
   grid = 20,
-  Ngen = 50,
+  Nt = 50,
+  Elim = 5,
   muG = 0,
   sigmaG = 1,
   muE = 0,
   sigmaE = 1,
-  Elim = 5,
-  seedlings = 4,
-  dispersal = 1,
-  gapradius = 2,
-  fallprobability = 0.01,
-  death = 0.1,
-  viability_deterministic = TRUE
+  Pfall = 0.01,
+  Rgaps = 2,
+  Pdeath = 0.1,
+  Ns = 4,
+  Rdispersal = 1,
+  determinist = TRUE
 ){
   Var1 <- Var2 <- NULL
-  sim <- simulatorCpp(grid, Ngen, muG, sigmaG, muE, sigmaE, Elim, seedlings, dispersal,
-                      gapradius, fallprobability, death, viability_deterministic)
+  sim <- simulatorCpp(grid, Nt, Elim,
+                      muG, sigmaG, muE, sigmaE, 
+                      Pfall, Rgaps, Pdeath, 
+                      Ns, Rdispersal,
+                      determinist)
   coords <- data.frame(
     individual = 1:(grid*grid),
     X = rep(1:grid, each = grid),
