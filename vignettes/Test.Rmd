@@ -21,4 +21,3 @@ library(ecoevosimulator)
 ```{r plot}
 plotSim(simulator())
 ```
-
