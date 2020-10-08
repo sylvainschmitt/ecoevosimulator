@@ -7,26 +7,36 @@ library(bayesplot)
 theme_set(bayesplot::theme_default())
 
 server <- function(input, output) {
-  parameters <- reactiveValues(grid = 20,
-                               Nt = 50,
-                               Elim = 5,
-                               muG = 0,
-                               sigmaG = 1,
-                               muE = 0,
-                               sigmaE = 1,
-                               Pfall = 0.01,
-                               Rgaps = 2,
-                               Pdeath = 0.1,
-                               Ns = 4,
-                               Rdispersal = 1,
-                               determinist = TRUE)
+  parameters <- reactiveValues(
+    grid = 20,
+    Nt = 50,
+    topography = "sinusoidal",
+    Elim = 5,
+    amplitude = 1,
+    rudgeness = 1,
+    plot = 1,
+    muG = 0,
+    sigmaG = 1,
+    muE = 0,
+    sigmaE = 1,
+    Pfall = 0.01,
+    Rgaps = 2,
+    Pdeath = 0.1,
+    Ns = 4,
+    Rdispersal = 1,
+    determinist = TRUE
+  )
   
   gif <- reactiveValues(calculate = FALSE)
   
   observeEvent(input$simulate, {
     parameters$grid <- input$grid
     parameters$Nt <- input$Nt
+    parameters$topography <- input$topography
     parameters$Elim <- input$Elim
+    parameters$amplitude <- input$amplitude
+    parameters$rudgeness <- input$rudgeness
+    parameters$plot <- input$plot
     parameters$sigmaG <- input$sigmaG
     parameters$sigmaE <- input$sigmaE
     parameters$Pfall <- input$Pfall
@@ -46,36 +56,48 @@ server <- function(input, output) {
     stopApp()
   })
   
-  output$simulator = renderPlot(plotSim(simulator(grid = parameters$grid,
-                        Nt = parameters$Nt,
-                        Elim = parameters$Elim,
-                        muG = 0,
-                        sigmaG = parameters$sigmaG,
-                        muE = 0,
-                        sigmaE = parameters$sigmaE,
-                        Pfall = parameters$Pfall,
-                        Rgaps = parameters$Rgaps,
-                        Pdeath = parameters$Pdeath,
-                        Ns = parameters$Ns,
-                        Rdispersal = parameters$Rdispersal,
-                        determinist = parameters$determinist)))
+  output$simulator = renderPlot(plotSim(simulator(
+    grid = parameters$grid,
+    Nt = parameters$Nt,
+    topography = parameters$topography,
+    Elim = parameters$Elim,
+    amplitude = parameters$amplitude,
+    rudgeness = parameters$rudgeness,
+    plot = parameters$plot,
+    muG = 0,
+    sigmaG = parameters$sigmaG,
+    muE = 0,
+    sigmaE = parameters$sigmaE,
+    Pfall = parameters$Pfall,
+    Rgaps = parameters$Rgaps,
+    Pdeath = parameters$Pdeath,
+    Ns = parameters$Ns,
+    Rdispersal = parameters$Rdispersal,
+    determinist = parameters$determinist
+    )))
   
   output$gif = renderImage({
     outfile <- tempfile(fileext='.gif')
     if(gif$calculate){
-      p <- gifMaps(simulator(grid = parameters$grid,
-                          Nt = parameters$Nt,
-                          Elim = parameters$Elim,
-                          muG = 0,
-                          sigmaG = parameters$sigmaG,
-                          muE = 0,
-                          sigmaE = parameters$sigmaE,
-                          Pfall = parameters$Pfall,
-                          Rgaps = parameters$Rgaps,
-                          Pdeath = parameters$Pdeath,
-                          Ns = parameters$Ns,
-                          Rdispersal = parameters$Rdispersal,
-                          determinist = parameters$determinist))
+      p <- gifMaps(simulator(
+        grid = parameters$grid,
+        Nt = parameters$Nt,
+        topography = parameters$topography,
+        Elim = parameters$Elim,
+        amplitude = parameters$amplitude,
+        rudgeness = parameters$rudgeness,
+        plot = parameters$plot,
+        muG = 0,
+        sigmaG = parameters$sigmaG,
+        muE = 0,
+        sigmaE = parameters$sigmaE,
+        Pfall = parameters$Pfall,
+        Rgaps = parameters$Rgaps,
+        Pdeath = parameters$Pdeath,
+        Ns = parameters$Ns,
+        Rdispersal = parameters$Rdispersal,
+        determinist = parameters$determinist
+      ))
       anim_save("outfile.gif", animate(p))
 
     } else{

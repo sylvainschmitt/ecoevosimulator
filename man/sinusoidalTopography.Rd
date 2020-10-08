@@ -13,6 +13,9 @@ sinusoidalTopography(grid = 2^6 + 1, Elim = 10, amplitude = 0.1)
 
 \item{amplitude}{double. Amplitude of the sinusoidal functional}
 }
+\value{
+Environmental matrix of size grid x grid for the simulator
+}
 \description{
 E = (-Elim, Elim)
 M = sin(amplitude.E*t(E))

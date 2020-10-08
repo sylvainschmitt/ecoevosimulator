@@ -8,7 +8,8 @@
 #' @param Elim double. Environmental matrix extrme (absolute value)
 #' @param amplitude double. Amplitude of the sinusoidal functional
 #'
-#' @return
+#' @return Environmental matrix of size grid x grid for the simulator
+#' 
 #' @export
 #'
 #' @examples
@@ -17,10 +18,10 @@
 sinusoidalTopography <- function(
   grid = 2^6+1, # must be of size 2^n+1
   Elim = 10,
-  amplitude = 0.1
+  amplitude = 1
 ){
-  E <- seq(from = -Elim, to = Elim, length.out = grid)
+  E <- seq(from = -1, to = 1, length.out = grid)
   M <- E %*% t(E)
-  M <- sin(amplitude*M)
+  M <- Elim*sin(amplitude*M)
   return(M)
 }

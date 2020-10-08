@@ -4,16 +4,25 @@
 \alias{simulator}
 \title{simulator}
 \usage{
-simulator(grid = 20, Nt = 50, Elim = 5, muG = 0, sigmaG = 1,
+simulator(grid = 20, Nt = 50, topography = "sinusoidal", Elim = 5,
+  amplitude = 0.01, rudgeness = 1, plot = 1, muG = 0, sigmaG = 1,
   muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2, Pdeath = 0.1,
   Ns = 4, Rdispersal = 1, determinist = TRUE)
 }
 \arguments{
-\item{grid}{int.  Number of cells per side of the matrix}
+\item{grid}{int.  Number of cells per side of the matrix, should be of size 2^n+1 for the square-diamond algorithm}
 
 \item{Nt}{int. Number of time steps}
 
-\item{Elim}{double. Environmental gradient size}
+\item{topography}{char. Topography generator between 'sinusoidal', 'squarediamond' or 'paracou'}
+
+\item{Elim}{double. Environmental matrix extrme (absolute value)}
+
+\item{amplitude}{double. Amplitude of the sinusoidal functional}
+
+\item{rudgeness}{double. Rugedness parameter}
+
+\item{plot}{int. Plot number between 1 and 15 (a cell size is 3x3m)}
 
 \item{muG}{double. Mean of genetic values}
 

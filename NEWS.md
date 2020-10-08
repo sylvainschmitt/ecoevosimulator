@@ -1,3 +1,6 @@
+# ecoevosimulator 1.0.9007
+* fixed sinusoidal topography generator and added Paracou topography
+
 # ecoevosimulator 1.0.9006
 * topography generators
 
