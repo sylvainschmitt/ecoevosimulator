@@ -4,16 +4,16 @@
 \alias{simulatorCpp}
 \title{simulator C++}
 \usage{
-simulatorCpp(grid = 20L, Nt = 50L, Elim = 5, muG = 0, sigmaG = 1,
+simulatorCpp(Topography, grid = 10L, Nt = 50L, muG = 0, sigmaG = 1,
   muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2L, Pdeath = 0.1,
   Ns = 4L, Rdispersal = 1L, determinist = TRUE)
 }
 \arguments{
+\item{Topography}{matrix. Environmental matrix}
+
 \item{grid}{int. Number of cell per side of the matrix}
 
 \item{Nt}{int. Number of time steps}
-
-\item{Elim}{double. Environmental gradient size}
 
 \item{muG}{double. Mean of genetic values}
 
@@ -42,6 +42,6 @@ A lsit.
 Eco-evolutionary simulator in C++.
 }
 \examples{
-simulatorCpp()
+simulatorCpp(Topography = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01))
 
 }

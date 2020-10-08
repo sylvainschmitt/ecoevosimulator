@@ -39,24 +39,6 @@ forestgapdynamics <- function(grid, Pfall, Rgaps) {
     .Call(`_ecoevosimulator_forestgapdynamics`, grid, Pfall, Rgaps)
 }
 
-#' @title Build gradient
-#' 
-#' @description
-#' C++ code to build environmental gradients
-#' 
-#' @name build_gradient
-#' 
-#' @param gradientlim double. Environmental gradient size
-#' @param length int. Number of cells
-#' 
-#' @examples
-#' product_environmental_matrix(10, 10)
-#' 
-#' @export
-product_environmental_matrix <- function(gradientlim, length) {
-    .Call(`_ecoevosimulator_product_environmental_matrix`, gradientlim, length)
-}
-
 #' @title simulator C++
 #' 
 #' @description
@@ -66,7 +48,7 @@ product_environmental_matrix <- function(gradientlim, length) {
 #' 
 #' @param grid int. Number of cell per side of the matrix
 #' @param Nt int. Number of time steps
-#' @param Elim double. Environmental gradient size
+#' @param Topography matrix. Environmental matrix
 #' @param muG double. Mean of genetic values
 #' @param sigmaG double. Variance of genetic values
 #' @param muE double. Mean of environmental values
@@ -81,10 +63,10 @@ product_environmental_matrix <- function(gradientlim, length) {
 #' @return A lsit.
 #' 
 #' @examples
-#' simulatorCpp()
+#' simulatorCpp(Topography = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01))
 #' 
 #' @export
-simulatorCpp <- function(grid = 20L, Nt = 50L, Elim = 5, muG = 0, sigmaG = 1, muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2L, Pdeath = 0.1, Ns = 4L, Rdispersal = 1L, determinist = TRUE) {
-    .Call(`_ecoevosimulator_simulatorCpp`, grid, Nt, Elim, muG, sigmaG, muE, sigmaE, Pfall, Rgaps, Pdeath, Ns, Rdispersal, determinist)
+simulatorCpp <- function(Topography, grid = 10L, Nt = 50L, muG = 0, sigmaG = 1, muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2L, Pdeath = 0.1, Ns = 4L, Rdispersal = 1L, determinist = TRUE) {
+    .Call(`_ecoevosimulator_simulatorCpp`, Topography, grid, Nt, muG, sigmaG, muE, sigmaE, Pfall, Rgaps, Pdeath, Ns, Rdispersal, determinist)
 }
 

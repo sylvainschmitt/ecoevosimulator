@@ -5,9 +5,13 @@ NULL
 
 #' simulator
 #' 
-#' @param grid int.  Number of cells per side of the matrix
+#' @param grid int.  Number of cells per side of the matrix, should be of size 2^n+1 for the square-diamond algorithm
 #' @param Nt int. Number of time steps
-#' @param Elim double. Environmental gradient size
+#' @param topography char. Topography generator between 'sinusoidal', 'squarediamond' or 'paracou'
+#' @param Elim double. Environmental matrix extrme (absolute value)
+#' @param amplitude double. Amplitude of the sinusoidal functional
+#' @param rudgeness double. Rugedness parameter
+#' @param plot int. Plot number between 1 and 15 (a cell size is 3x3m)
 #' @param muG double. Mean of genetic values
 #' @param sigmaG double. Variance of genetic values
 #' @param muE double. Mean of environmental values
@@ -30,7 +34,11 @@ NULL
 simulator <- function(
   grid = 20,
   Nt = 50,
+  topography = "sinusoidal",
   Elim = 5,
+  amplitude = 1,
+  rudgeness = 1,
+  plot = 1,
   muG = 0,
   sigmaG = 1,
   muE = 0,
@@ -42,18 +50,46 @@ simulator <- function(
   Rdispersal = 1,
   determinist = TRUE
 ){
+  if(!(topography %in% c('sinusoidal', 'squarediamond', 'paracou')))
+    stop(paste(topography, "option doesn't exist to generate topography (see help)."))
+  if(topography == 'sinusoidal')
+    Topography <- sinusoidalTopography(grid = grid, 
+                                       Elim = Elim, 
+                                       amplitude = amplitude)
+  if(topography == 'squarediamond')
+    Topography <- squareDiamondTopography(grid = grid, 
+                                          rudgeness = rudgeness)
+  if(topography == 'paracou'){
+    Topography <- paracouTopography(plot = plot,
+                                    Elim = Elim)
+    if(grid > ncol(Topography))
+      stop(paste0("Using topography fom Paracou plot ", plot, ", the grid can't excess ", ncol(Topography)))
+    Topography <- Topography[1:grid, 1:grid]
+  }
+
   Var1 <- Var2 <- NULL
-  sim <- simulatorCpp(grid, Nt, Elim,
-                      muG, sigmaG, muE, sigmaE, 
-                      Pfall, Rgaps, Pdeath, 
-                      Ns, Rdispersal,
-                      determinist)
+  sim <- simulatorCpp(
+    Topography = Topography,
+    grid = grid, 
+    Nt = Nt, 
+    muG = muG, 
+    sigmaG = sigmaG,
+    muE = muE,
+    sigmaE = sigmaE, 
+    Pfall = Pfall,
+    Rgaps = Rgaps,
+    Pdeath = Pdeath, 
+    Ns = Ns, 
+    Rdispersal = Rdispersal, 
+    determinist =  determinist
+  )
   coords <- data.frame(
     individual = 1:(grid*grid),
     X = rep(1:grid, each = grid),
     Y = rep(1:grid, grid)
   )
-  lapply(list("ecotype" = sim$E, 
+  lapply(list("topography" = sim$Etopo, 
+              "gaps" = sim$Egaps, 
               "genotype" = sim$A, 
               "phenotype" = sim$Z), 
          function(M)

@@ -8,19 +8,22 @@ NULL
 #' gifMaps
 #'
 #' @param simulation df.  result from simulator function
+#' @param variable char.  variable to visualize "topography", "gaps",
+#'   "genotype", or "phenotype"
 #'
 #' @return A ggplot.
-#' 
+#'
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' simulation <- simulator(grid = 50)
 #' gifMaps(simulator())
 #' 
-gifMaps <- function(simulation){
+gifMaps <- function(simulation, variable = "genotype"){
+  # add a test for variable
   X <- Y <- value <- generation <- individual <- var <- NULL
-  filter(simulation, var == "genotype") %>% 
+  filter(simulation, var == variable) %>% 
     ggplot(aes(X, Y, fill = value)) +
     geom_tile() +
     facet_wrap(~ var) +

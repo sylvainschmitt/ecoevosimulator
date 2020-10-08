@@ -1,7 +1,7 @@
 #' @include utils-pipe.R
 #' @import ggplot2
 #' @importFrom viridis scale_color_viridis
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter select
 #' @importFrom reshape2 melt dcast
 #' @importFrom gridExtra grid.arrange
 NULL
@@ -47,11 +47,12 @@ plotSim <- function(simulation, gen = 1){
 plotEnv <- function(simulation, gen = 1){
   X <- Y <- value <- generation <- individual <- var <- NULL
   filter(simulation, 
-         var == "ecotype", 
+         var == "topography", 
          generation == gen) %>%
     ggplot(aes(X, Y, fill = value)) +
     geom_tile() +
-    viridis::scale_fill_viridis(guide = "none")
+    viridis::scale_fill_viridis()
+    # viridis::scale_fill_viridis(guide = "none")
 }
 
 #' plotMaps
@@ -69,7 +70,7 @@ plotEnv <- function(simulation, gen = 1){
 plotMaps <- function(simulation){
   X <- Y <- value <- generation <- individual <- var <- NULL
   filter(simulation, 
-         var != "ecotype",
+         var %in% c("genotype", "phenotype"),
          generation %in% c(1, floor(max(simulation$generation)/2), max(simulation$generation))) %>% 
     ggplot(aes(X, Y, fill = value)) +
     facet_wrap(~ generation) +
@@ -93,9 +94,10 @@ plotMaps <- function(simulation){
 plotTrajectories <- function(simulation){
   X <- Y <- value <- generation <- individual <- ecotype <- NULL
   dcast(simulation, generation + individual + X + Y ~ var) %>%
-    melt(id.vars = c("generation", "individual", "X", "Y", "ecotype")) %>% 
+    select(-gaps) %>% 
+    melt(id.vars = c("generation", "individual", "X", "Y", "topography")) %>% 
     ggplot(aes(generation, value, 
-               group = individual, col = ecotype)) + 
+               group = individual, col = topography)) + 
     geom_line(alpha = 0.5) +
     facet_wrap(~ variable) +
     viridis::scale_color_viridis(guide = "none")

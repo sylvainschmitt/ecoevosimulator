@@ -19,6 +19,9 @@ library(ecoevosimulator)
 ```
 
 ```{r plot}
-plotSim(simulator())
+plotSim(simulator(grid = 50))
 ```
 
+```{r gaps, eval=F}
+gifMaps(simulator(grid = 50, Nt = 100, Pfall = 0.01, Rgaps = 2), variable = "gaps")
+```

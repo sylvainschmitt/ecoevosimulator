@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include "product_environmental_matrix.h"
 #include "forestgapdynamics.h"
 #include "disperse.h"  
 using namespace Rcpp;
@@ -13,7 +12,7 @@ using namespace Rcpp;
 //' 
 //' @param grid int. Number of cell per side of the matrix
 //' @param Nt int. Number of time steps
-//' @param Elim double. Environmental gradient size
+//' @param Topography matrix. Environmental matrix
 //' @param muG double. Mean of genetic values
 //' @param sigmaG double. Variance of genetic values
 //' @param muE double. Mean of environmental values
@@ -28,14 +27,14 @@ using namespace Rcpp;
 //' @return A lsit.
 //' 
 //' @examples
-//' simulatorCpp()
+//' simulatorCpp(Topography = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01))
 //' 
 //' @export
 // [[Rcpp::export]]
 List simulatorCpp(
-    int grid = 20,
+    Rcpp::NumericMatrix Topography,
+    int grid = 10,
     int Nt = 50,
-    double Elim = 5,
     double muG = 0,
     double sigmaG = 1,
     double muE = 0,
@@ -48,30 +47,31 @@ List simulatorCpp(
     bool determinist = true
 ) {
   int Nind = grid*grid ;
+  if (Topography.rows() != grid) {
+    stop("Topography must be of size grid.");
+  }
   
   // Matrices stocking all values
-  NumericMatrix E(Nt, Nind) ; // ecotypes
+  NumericMatrix Etopo(Nt, Nind) ; // topography
+  NumericMatrix Egaps(Nt, Nind) ; // forest gap dynamics
   NumericMatrix A(Nt, Nind) ; // genotypes
   NumericMatrix Z(Nt, Nind) ; // phenotypes
   
   // Matrices for values at one generation and the next
-  NumericMatrix Egen = product_environmental_matrix(Elim, grid) ;
   NumericMatrix Agen(grid, grid) ;
   NumericMatrix Zgen(grid, grid) ;
   NumericMatrix Anext(grid, grid) ;
   NumericMatrix Znext(grid, grid) ;
-  
-  // mortality
-  NumericMatrix treefalls(grid, grid) ;
+  NumericMatrix Gaps(grid, grid) ;
+ 
+  // cycles
   bool dead ;
-  
-  // reproduction & recruitment
   IntegerVector individual(2),  mother(2), father(2), seeds = seq(0, Ns-1) ;
   NumericVector aoffsprings(Ns), zoffsprings(Ns), viability(Ns) ;
   int winner ;
 
   // Initialisation
-  E.row(0) = Egen ;
+  Etopo.row(0) = Topography ;
   for(int i = 0; i < Nind; i++){
     Agen[i] = rnorm(1, muG, sigmaG)[0] ;
     Zgen[i] = Agen[i] + rnorm(1, muE, sigmaE)[0] ;
@@ -83,14 +83,14 @@ List simulatorCpp(
   for (int t = 1; t < Nt; t++){ // gens
     
     // treefalls
-    treefalls = forestgapdynamics(grid, Pfall, Rgaps) ;
+    Gaps = forestgapdynamics(grid, Pfall, Rgaps) ;
     
     for (int x = 0; x < grid; x++){ // rows
       for (int y = 0; y < grid; y++){ // cols
 
         // mortality
         dead = false ;
-        if(treefalls(x,y) == 1) dead = true ;
+        if(Gaps(x,y) == 1) dead = true ;
         if(runif(1)[0] <= Pdeath) dead = true ;
           
         if(dead){
@@ -106,7 +106,7 @@ List simulatorCpp(
           }
           
           // recruitment
-          viability = 1/sqrt((zoffsprings - Egen(x,y))*(zoffsprings - Egen(x,y))) ;
+          viability = 1/sqrt((zoffsprings - Topography(x,y))*(zoffsprings - Topography(x,y))) ;
           if(determinist){
             winner = which_max(viability) ;
           } else {
@@ -126,7 +126,8 @@ List simulatorCpp(
     // saving values from the generation
     Agen = Anext ;
     Zgen = Znext ;
-    E.row(t) = Egen ;
+    Etopo.row(t) = Topography ;
+    Egaps.row(t) = Gaps ;
     A.row(t) = Agen ;
     Z.row(t) = Zgen ;
   }
@@ -134,6 +135,7 @@ List simulatorCpp(
   // return
   List sim = List::create(Named("A") = A, 
                           Named("Z") = Z,
-                          Named("E") = E) ;
+                          Named("Etopo") = Etopo,
+                          Named("Egaps") = Egaps) ;
   return sim;
 }
