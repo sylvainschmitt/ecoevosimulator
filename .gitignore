@@ -7,3 +7,5 @@ src/*.so
 src/*.dll
 inst/doc
 inst/gui/rsconnect
+tests/testthat/Rplots.pdf
+

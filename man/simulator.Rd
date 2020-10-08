@@ -5,7 +5,7 @@
 \title{simulator}
 \usage{
 simulator(grid = 20, Nt = 50, topography = "sinusoidal", Elim = 5,
-  amplitude = 0.01, rudgeness = 1, plot = 1, muG = 0, sigmaG = 1,
+  amplitude = 1, rudgeness = 1, plot = 1, muG = 0, sigmaG = 1,
   muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2, Pdeath = 0.1,
   Ns = 4, Rdispersal = 1, determinist = TRUE)
 }

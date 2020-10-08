@@ -92,7 +92,7 @@ plotMaps <- function(simulation){
 #' plotTrajectories(simulator())
 #' 
 plotTrajectories <- function(simulation){
-  X <- Y <- value <- generation <- individual <- ecotype <- NULL
+  X <- Y <- value <- generation <- individual <- ecotype <- gaps <- topography <- NULL
   dcast(simulation, generation + individual + X + Y ~ var) %>%
     select(-gaps) %>% 
     melt(id.vars = c("generation", "individual", "X", "Y", "topography")) %>% 

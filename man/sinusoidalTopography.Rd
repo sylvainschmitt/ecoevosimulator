@@ -4,7 +4,7 @@
 \alias{sinusoidalTopography}
 \title{Topography generator with the sinusoidal function}
 \usage{
-sinusoidalTopography(grid = 2^6 + 1, Elim = 10, amplitude = 0.1)
+sinusoidalTopography(grid = 2^6 + 1, Elim = 10, amplitude = 1)
 }
 \arguments{
 \item{grid}{int. Matrix grid size should be of size 2^n+1}
