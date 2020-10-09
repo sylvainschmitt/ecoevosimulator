@@ -56,9 +56,11 @@ simulator <- function(
     Topography <- sinusoidalTopography(grid = grid, 
                                        Elim = Elim, 
                                        amplitude = amplitude)
-  if(topography == 'squarediamond')
-    Topography <- squareDiamondTopography(grid = grid, 
+  if(topography == 'squarediamond'){
+    Topography <- squareDiamondTopography(grid = 2^ceiling(log2(grid-1))+1, 
                                           rudgeness = rudgeness)
+    Topography <- Topography[1:grid, 1:grid]
+  }
   if(topography == 'paracou'){
     Topography <- paracouTopography(plot = plot,
                                     Elim = Elim)

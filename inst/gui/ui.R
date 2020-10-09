@@ -26,14 +26,26 @@ ui <- dashboardPage(
                     min = 1, max = 500, value = 50),
         selectInput("topography", "Topography generator", 
                     choices = c('sinusoidal', 'squarediamond', 'paracou'), selected = 'sinusoidal'),
-        sliderInput("Elim", "Environmental gradient size:",
-                    min = 0, max = 100, value = 5),
-        numericInput("amplitude", "Environmental gradient amplitude:",
-                     min = 0, max = 10, value = 0.01, step = 1),
-        numericInput("rudgeness", "Environmental gradient rudgeness:",
-                     min = 0, max = 10, value = 1, step = 1),
-        sliderInput("plot", "Paracou plot:",
-                    min = 1, max = 15, value = 1),
+        conditionalPanel(
+            condition = "input.topography == 'paracou'",
+            sliderInput("plot", "Paracou plot:",
+                        min = 1, max = 15, value = 1)
+        ),
+        conditionalPanel(
+            condition = "input.topography != 'squarediamond'",
+            sliderInput("Elim", "Environmental gradient size:",
+                        min = 0, max = 100, value = 5)  
+        ),
+        conditionalPanel(
+            condition = "input.topography == 'sinusoidal'",
+            sliderInput("amplitude", "Environmental gradient amplitude:",
+                        min = 0, max = 10, value = 1, step = 1)  
+        ),
+        conditionalPanel(
+            condition = "input.topography == 'squarediamond'",
+            sliderInput("rudgeness", "Environmental gradient rudgeness:",
+                        min = 0, max = 10, value = 1, step = 1)
+        ),
         numericInput("sigmaG", "Genetic variance:",
                      min = 0, max = 10, value = 1, step = 1),
         numericInput("sigmaE", "Environmental variance:",
