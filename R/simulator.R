@@ -5,8 +5,8 @@ NULL
 
 #' simulator
 #' 
-#' @param grid int.  Number of cells per side of the matrix, should be of size 2^n+1 for the square-diamond algorithm
-#' @param Nt int. Number of time steps
+#' @param grid int.  Number of cells per side of the matrix.
+#' @param Nt int. Number of time steps.
 #' @param topography char. Topography generator between 'sinusoidal', 'squarediamond' or 'paracou'
 #' @param Elim double. Environmental matrix extrme (absolute value)
 #' @param amplitude double. Amplitude of the sinusoidal functional

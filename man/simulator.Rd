@@ -10,9 +10,9 @@ simulator(grid = 20, Nt = 50, topography = "sinusoidal", Elim = 5,
   Ns = 4, Rdispersal = 1, determinist = TRUE)
 }
 \arguments{
-\item{grid}{int.  Number of cells per side of the matrix, should be of size 2^n+1 for the square-diamond algorithm}
+\item{grid}{int.  Number of cells per side of the matrix.}
 
-\item{Nt}{int. Number of time steps}
+\item{Nt}{int. Number of time steps.}
 
 \item{topography}{char. Topography generator between 'sinusoidal', 'squarediamond' or 'paracou'}
 

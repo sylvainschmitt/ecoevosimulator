@@ -1,2 +1,0 @@
-- Abrupt tranistion in Paracou plots seems to matter for species divergence, maybe we should try to run TWI on generated topography
-- Cell size of Paracou is 3x3m, ideally the size should be of a typical reproducing adult tree in canopy

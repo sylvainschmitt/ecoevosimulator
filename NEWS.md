@@ -1,3 +1,8 @@
+# ecoevosimulator 1.0.9008
+* rdeltanci.R
+* rspcor.R
+* generateNCI.R
+
 # ecoevosimulator 1.0.9007
 * fixed sinusoidal topography generator and added Paracou topography
 * improved ui

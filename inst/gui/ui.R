@@ -1,3 +1,6 @@
+# devtools::install_github("sylvainschmitt/ecoevosimulator")
+# need to install from github to push on shinyapps
+
 library(ecoevosimulator)
 library(shiny)
 library(shinydashboard)
