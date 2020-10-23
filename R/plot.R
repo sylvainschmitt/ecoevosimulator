@@ -1,7 +1,7 @@
-#' @include utils-pipe.R
+#' @include utils-pipe.R simulator.R
 #' @import ggplot2
 #' @importFrom viridis scale_color_viridis
-#' @importFrom dplyr filter select
+#' @importFrom dplyr filter select group_by ungroup
 #' @importFrom reshape2 melt dcast
 #' @importFrom gridExtra grid.arrange
 NULL
@@ -9,7 +9,7 @@ NULL
 #' plotSim
 #'
 #' @param simulation df.  result from simulator function
-#' @param gen int.  generation to be plotted
+#' @param time int.  generation to be plotted
 #' 
 #' @return A ggplot.
 #' 
@@ -19,40 +19,14 @@ NULL
 #' 
 #' plotSim(simulator())
 #' 
-plotSim <- function(simulation, gen = 1){
-  gridExtra::grid.arrange(
-    plotEnv(simulation, gen),
+plotSim <- function(simulation, time = 1){
+  grid.arrange(
     plotMaps(simulation),
     plotTrajectories(simulation),
-    nrow = 2,
-    widths = c(1,2),
-    layout_matrix = rbind(c(1, 2),
-                          c(3, 3))
+    ncol = 2,
+    widths = c(1,1),
+    layout_matrix = rbind(c(1, 2))
   )
-}
-  
-#' plotEnv
-#'
-#' @param simulation df.  result from simulator function
-#' @param gen int.  generation to be plotted
-#'
-#' @return A ggplot.
-#' 
-#' @export
-#'
-#' @examples
-#' 
-#' plotEnv(simulator())
-#' 
-plotEnv <- function(simulation, gen = 1){
-  X <- Y <- value <- generation <- individual <- var <- NULL
-  filter(simulation, 
-         var == "topography", 
-         generation == gen) %>%
-    ggplot(aes(X, Y, fill = value)) +
-    geom_tile() +
-    viridis::scale_fill_viridis()
-    # viridis::scale_fill_viridis(guide = "none")
 }
 
 #' plotMaps
@@ -68,14 +42,16 @@ plotEnv <- function(simulation, gen = 1){
 #' plotMaps(simulator())
 #' 
 plotMaps <- function(simulation){
-  X <- Y <- value <- generation <- individual <- var <- NULL
+  X <- Y <- value <- timestep <- individual <- var <- variable <- NULL
   filter(simulation, 
-         var %in% c("genotype", "phenotype"),
-         generation %in% c(1, floor(max(simulation$generation)/2), max(simulation$generation))) %>% 
+         timestep %in% c(1, floor(max(simulation$timestep)/2), max(simulation$timestep))) %>% 
+    # group_by(variable, type) %>% 
+    group_by(variable) %>% 
+    mutate(value = scale(value)) %>% 
     ggplot(aes(X, Y, fill = value)) +
-    facet_wrap(~ generation) +
+    facet_wrap(~ timestep) +
     geom_tile() +
-    facet_grid(var ~ generation) +
+    facet_grid(variable + type ~ timestep) +
     viridis::scale_fill_viridis(guide = "none")
 }
 
@@ -92,13 +68,17 @@ plotMaps <- function(simulation){
 #' plotTrajectories(simulator())
 #' 
 plotTrajectories <- function(simulation){
-  X <- Y <- value <- generation <- individual <- ecotype <- gaps <- topography <- NULL
-  dcast(simulation, generation + individual + X + Y ~ var) %>%
-    select(-gaps) %>% 
-    melt(id.vars = c("generation", "individual", "X", "Y", "topography")) %>% 
-    ggplot(aes(generation, value, 
-               group = individual, col = topography)) + 
+  X <- Y <- value <- timestep <- individual <- variable <- env <- NULL
+  dcast(simulation, timestep + individual + X + Y + variable ~ type) %>%
+    mutate(env = environment) %>% 
+    melt(id.vars = c("timestep", "individual", "X", "Y", "variable", "env"),
+         variable.name = "type") %>%
+    group_by(variable) %>%
+    mutate(env = scale(env)) %>%
+    ungroup() %>% 
+    ggplot(aes(timestep, value,
+               group = individual, col = env)) +
     geom_line(alpha = 0.5) +
-    facet_wrap(~ variable) +
+    facet_grid(variable ~ type, scales = "free") +
     viridis::scale_color_viridis(guide = "none")
 }

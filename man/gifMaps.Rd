@@ -4,13 +4,15 @@
 \alias{gifMaps}
 \title{gifMaps}
 \usage{
-gifMaps(simulation, variable = "genotype")
+gifMaps(simulation, type = "genotype", variable = "topography")
 }
 \arguments{
-\item{simulation}{df.  result from simulator function}
+\item{simulation}{df. Result from simulator function.}
 
-\item{variable}{char.  variable to visualize "topography", "gaps",
-"genotype", or "phenotype"}
+\item{type}{char. Type to visualize "variable", "genotype", or
+"phenotype".}
+
+\item{variable}{char. Variable to visualize "topography" or "nci".}
 }
 \value{
 A ggplot.

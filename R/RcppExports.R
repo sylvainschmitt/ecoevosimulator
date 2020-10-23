@@ -20,25 +20,6 @@ disperse <- function(a, Rdispersal, grid) {
     .Call(`_ecoevosimulator_disperse`, a, Rdispersal, grid)
 }
 
-#' @title Forest gap dynamics
-#' 
-#' @description
-#' C++ code for forest gap dynamics
-#' 
-#' @name forestgapdynamics
-#' 
-#' @param grid int.Number of cell per side of the matrix
-#' @param Pfall double. Treefall probability
-#' @param Rgaps int. Treefall gaps radius
-#' 
-#' @examples
-#' forestgapdynamics(20, 2, 0.01)
-#' 
-#' @export
-forestgapdynamics <- function(grid, Pfall, Rgaps) {
-    .Call(`_ecoevosimulator_forestgapdynamics`, grid, Pfall, Rgaps)
-}
-
 #' @title simulator C++
 #' 
 #' @description
@@ -46,27 +27,28 @@ forestgapdynamics <- function(grid, Pfall, Rgaps) {
 #' 
 #' @name simulatorCpp
 #' 
-#' @param grid int. Number of cell per side of the matrix
-#' @param Nt int. Number of time steps
-#' @param Topography matrix. Environmental matrix
-#' @param muG double. Mean of genetic values
-#' @param sigmaG double. Variance of genetic values
-#' @param muE double. Mean of environmental values
-#' @param sigmaE double. Variance of environmental values
-#' @param Pfall double. Treefall probability
-#' @param Rgaps int. Treefall gaps radius
-#' @param Pdeath double. Background mortality probability
-#' @param Ns int. Number of seedlings per cell
-#' @param Rdispersal int. Dispersal radius in cells
-#' @param determinist bool. Deterministic or probabilistic vaibility
+#' @param Topo matrix. Topography matrix generated with `sinusoidalTopogrpahy`, 
+#'                     `squareDiamondTopography`, `paracouTopography`.
+#' @param NCI matrix. NCI matrix generated with `generateNCI`.
+#' @param grid int. Number of cell per side of the matrix.
+#' @param Nt int. Number of time steps.
+#' @param sigmaGtopo double. Variance of genetic values with topography.
+#' @param sigmaZtopo double. Plasticity of phenotypes with topography.
+#' @param sigmaGnci double. Variance of genetic values with NCI.
+#' @param sigmaZnci double. Plasticity of phenotypes with NCI.
+#' @param Pdeath double. Background mortality probability.
+#' @param Ns int. Number of seedlings per cell.
+#' @param Rdispersal int. Dispersal radius in cells.
+#' @param determinist bool. Deterministic or probabilistic vaibility.
 #' 
-#' @return A lsit.
+#' @return List of 6 Topography, Atopo, Ztopo, NCI, Anci, Znci.
 #' 
 #' @examples
-#' simulatorCpp(Topography = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01))
+#' simulatorCpp(Topo = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01), 
+#'              NCI = generateNCIsim(grid = 10, Nt = 50))
 #' 
 #' @export
-simulatorCpp <- function(Topography, grid = 10L, Nt = 50L, muG = 0, sigmaG = 1, muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2L, Pdeath = 0.1, Ns = 4L, Rdispersal = 1L, determinist = TRUE) {
-    .Call(`_ecoevosimulator_simulatorCpp`, Topography, grid, Nt, muG, sigmaG, muE, sigmaE, Pfall, Rgaps, Pdeath, Ns, Rdispersal, determinist)
+simulatorCpp <- function(Topo, NCI, grid = 10L, Nt = 50L, sigmaGtopo = 1, sigmaZtopo = 1, sigmaGnci = 2.651, sigmaZnci = 2.651, Pdeath = 0.01325548, Ns = 4L, Rdispersal = 1L, determinist = TRUE) {
+    .Call(`_ecoevosimulator_simulatorCpp`, Topo, NCI, grid, Nt, sigmaGtopo, sigmaZtopo, sigmaGnci, sigmaZnci, Pdeath, Ns, Rdispersal, determinist)
 }
 

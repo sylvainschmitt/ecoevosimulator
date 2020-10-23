@@ -5,44 +5,64 @@
 \title{simulator}
 \usage{
 simulator(grid = 20, Nt = 50, topography = "sinusoidal", Elim = 5,
-  amplitude = 1, rudgeness = 1, plot = 1, muG = 0, sigmaG = 1,
-  muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2, Pdeath = 0.1,
-  Ns = 4, Rdispersal = 1, determinist = TRUE)
+  amplitude = 1, rudgeness = 1, plot = 1, muNCI = 124,
+  sigmaNCI = 26, p = 0.271, mu = 0.749, sigma = 2.651,
+  lambda = 0.31, d = 3, sigmaGtopo = 1, sigmaZtopo = 1,
+  sigmaGnci = 26, sigmaZnci = 26, Pdeath = 0.01325548, Ns = 4,
+  Rdispersal = 1, determinist = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{grid}{int.  Number of cells per side of the matrix.}
 
 \item{Nt}{int. Number of time steps.}
 
-\item{topography}{char. Topography generator between 'sinusoidal', 'squarediamond' or 'paracou'}
+\item{topography}{char. Topography generator between 'sinusoidal',
+'squarediamond' or 'paracou'.}
 
-\item{Elim}{double. Environmental matrix extrme (absolute value)}
+\item{Elim}{double. Environmental matrix extrme (absolute value).}
 
-\item{amplitude}{double. Amplitude of the sinusoidal functional}
+\item{amplitude}{double. Amplitude of the sinusoidal functional.}
 
-\item{rudgeness}{double. Rugedness parameter}
+\item{rudgeness}{double. Rugedness parameter.}
 
-\item{plot}{int. Plot number between 1 and 15 (a cell size is 3x3m)}
+\item{plot}{int. Plot number between 1 and 15 (a cell size is 3x3m).}
 
-\item{muG}{double. Mean of genetic values}
+\item{muNCI}{double. mu parameter for the normal distribution used for NCI.}
 
-\item{sigmaG}{double. Variance of genetic values}
+\item{sigmaNCI}{double. sigma parameter for the normal distribution used for
+NCI.}
 
-\item{muE}{double. Mean of environmental values}
+\item{p}{double. Probability to be negative used in the Bernoulli
+distribution.}
 
-\item{sigmaE}{double. Variance of environmental values}
+\item{mu}{double. mu parameter for the lognormal distribution used for
+positive deltaNCI.}
 
-\item{Pfall}{double. Treefall probability}
+\item{sigma}{double. sigma parameter for the lognormal distribution used for
+positive deltaNCI.}
 
-\item{Rgaps}{int. Treefall gaps radius}
+\item{lambda}{double. lambda parameter for the exponential distribution used
+for negative deltaNCI.}
 
-\item{Pdeath}{double. Background mortality probability}
+\item{d}{int. Spatial autoccorelation size in number of cells.}
 
-\item{Ns}{int. Number of seedlings per cell}
+\item{sigmaGtopo}{double. Variance of genetic values with topography.}
 
-\item{Rdispersal}{int. Dispersal radius in cells}
+\item{sigmaZtopo}{double. Plasticity of phenotypes with topography.}
 
-\item{determinist}{bool. Deterministic or probabilistic vaibility}
+\item{sigmaGnci}{double. Variance of genetic values with NCI.}
+
+\item{sigmaZnci}{double. Plasticity of phenotypes with NCI.}
+
+\item{Pdeath}{double. Background mortality probability.}
+
+\item{Ns}{int. Number of seedlings per cell.}
+
+\item{Rdispersal}{int. Dispersal radius in cells.}
+
+\item{determinist}{bool. Deterministic or probabilistic vaibility.}
+
+\item{verbose}{bool. Should the function print statuses.}
 }
 \value{
 A data frame.

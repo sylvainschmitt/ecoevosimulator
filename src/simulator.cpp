@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include "forestgapdynamics.h"
 #include "disperse.h"  
 using namespace Rcpp;
 
@@ -10,87 +9,112 @@ using namespace Rcpp;
 //' 
 //' @name simulatorCpp
 //' 
-//' @param grid int. Number of cell per side of the matrix
-//' @param Nt int. Number of time steps
-//' @param Topography matrix. Environmental matrix
-//' @param muG double. Mean of genetic values
-//' @param sigmaG double. Variance of genetic values
-//' @param muE double. Mean of environmental values
-//' @param sigmaE double. Variance of environmental values
-//' @param Pfall double. Treefall probability
-//' @param Rgaps int. Treefall gaps radius
-//' @param Pdeath double. Background mortality probability
-//' @param Ns int. Number of seedlings per cell
-//' @param Rdispersal int. Dispersal radius in cells
-//' @param determinist bool. Deterministic or probabilistic vaibility
+//' @param Topo matrix. Topography matrix generated with `sinusoidalTopogrpahy`, 
+//'                     `squareDiamondTopography`, `paracouTopography`.
+//' @param NCI matrix. NCI matrix generated with `generateNCI`.
+//' @param grid int. Number of cell per side of the matrix.
+//' @param Nt int. Number of time steps.
+//' @param sigmaGtopo double. Variance of genetic values with topography.
+//' @param sigmaZtopo double. Plasticity of phenotypes with topography.
+//' @param sigmaGnci double. Variance of genetic values with NCI.
+//' @param sigmaZnci double. Plasticity of phenotypes with NCI.
+//' @param Pdeath double. Background mortality probability.
+//' @param Ns int. Number of seedlings per cell.
+//' @param Rdispersal int. Dispersal radius in cells.
+//' @param determinist bool. Deterministic or probabilistic vaibility.
 //' 
-//' @return A lsit.
+//' @return List of 6 Topography, Atopo, Ztopo, NCI, Anci, Znci.
 //' 
 //' @examples
-//' simulatorCpp(Topography = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01))
+//' simulatorCpp(Topo = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01), 
+//'              NCI = generateNCIsim(grid = 10, Nt = 50))
 //' 
 //' @export
 // [[Rcpp::export]]
 List simulatorCpp(
-    Rcpp::NumericMatrix Topography,
+    Rcpp::NumericMatrix Topo,
+    Rcpp::NumericMatrix NCI,
     int grid = 10,
     int Nt = 50,
-    double muG = 0,
-    double sigmaG = 1,
-    double muE = 0,
-    double sigmaE = 1,
-    double Pfall = 0.01,
-    int Rgaps = 2,
-    double Pdeath = 0.1 ,
+    double sigmaGtopo = 1,
+    double sigmaZtopo = 1,
+    double sigmaGnci = 2.651,
+    double sigmaZnci = 2.651,
+    double Pdeath = 0.01325548,
     int Ns = 4,
     int Rdispersal = 1,
     bool determinist = true
 ) {
   int Nind = grid*grid ;
-  if (Topography.rows() != grid) {
-    stop("Topography must be of size grid.");
+  
+  // Inputs check
+  if (Topo.rows() != grid) {
+    stop("Topography must be of size grid x grid.");
+  }
+  if (Topo.cols() != grid) {
+    stop("Topography must be of size grid x grid.");
+  }
+  if (NCI.rows() != Nt) {
+    stop("NCI must be of size Nt x grid^2.");
+  }
+  if (NCI.cols() != Nind) {
+    stop("NCI must be of size Nt x grid^2.");
   }
   
-  // Matrices stocking all values
-  NumericMatrix Etopo(Nt, Nind) ; // topography
-  NumericMatrix Egaps(Nt, Nind) ; // forest gap dynamics
-  NumericMatrix A(Nt, Nind) ; // genotypes
-  NumericMatrix Z(Nt, Nind) ; // phenotypes
-  
   // Matrices for values at one generation and the next
-  NumericMatrix Agen(grid, grid) ;
-  NumericMatrix Zgen(grid, grid) ;
-  NumericMatrix Anext(grid, grid) ;
-  NumericMatrix Znext(grid, grid) ;
-  NumericMatrix Gaps(grid, grid) ;
+  NumericMatrix Atopogen(grid, grid) ;
+  NumericMatrix Ztopogen(grid, grid) ;
+  NumericMatrix Atoponext(grid, grid) ;
+  NumericMatrix Ztoponext(grid, grid) ;
+  NumericMatrix NCIgen(grid, grid) ;
+  NumericMatrix Ancigen(grid, grid) ;
+  NumericMatrix Zncigen(grid, grid) ;
+  NumericMatrix Ancinext(grid, grid) ;
+  NumericMatrix Zncinext(grid, grid) ;
+  
+  // Matrices stocking all values
+  NumericMatrix Topography(Nt, Nind) ; // topography
+  NumericMatrix Atopo(Nt, Nind) ; // genotypes
+  NumericMatrix Ztopo(Nt, Nind) ; // phenotypes
+  NumericMatrix Anci(Nt, Nind) ; // genotypes
+  NumericMatrix Znci(Nt, Nind) ; // phenotypes
  
   // cycles
   bool dead ;
   IntegerVector individual(2),  mother(2), father(2), seeds = seq(0, Ns-1) ;
-  NumericVector aoffsprings(Ns), zoffsprings(Ns), viability(Ns) ;
+  NumericVector atopooffsprings(Ns), ztopooffsprings(Ns) ;
+  NumericVector ancioffsprings(Ns), zncioffsprings(Ns) ;
+  NumericVector viability(Ns) ;
   int winner ;
 
   // Initialisation
-  Etopo.row(0) = Topography ;
+  double muTopo = mean(Topo), muNCI = mean(NCI) ;
+  double sigmaTopo = sd(Topo), sigmaNCI = sd(NCI) ;
+  Topography.row(0) = Topo ;
   for(int i = 0; i < Nind; i++){
-    Agen[i] = rnorm(1, muG, sigmaG)[0] ;
-    Zgen[i] = Agen[i] + rnorm(1, muE, sigmaE)[0] ;
+    Atopogen[i] = rnorm(1, muTopo, sigmaGtopo)[0] ;
+    Ztopogen[i] = rnorm(1, Atopogen[i], sigmaZtopo)[0] ;
+    Ancigen[i] = rnorm(1, muNCI, sigmaGnci)[0] ;
+    Zncigen[i] = rnorm(1, Ancigen[i], sigmaZnci)[0] ;
   }
-  A.row(0) = Agen ;
-  Z.row(0) = Zgen  ;
+  Atopo.row(0) = Atopogen ;
+  Ztopo.row(0) = Ztopogen  ;
+  Anci.row(0) = Ancigen ;
+  Znci.row(0) = Zncigen  ;
   
   // cycles
   for (int t = 1; t < Nt; t++){ // gens
     
-    // treefalls
-    Gaps = forestgapdynamics(grid, Pfall, Rgaps) ;
+    // NCI
+    NumericVector temp = NCI.row(t-1) ;
+    temp.attr("dim") = Dimension(grid, grid) ;
+    NCIgen = as<NumericMatrix>(temp) ;
     
     for (int x = 0; x < grid; x++){ // rows
       for (int y = 0; y < grid; y++){ // cols
 
         // mortality
         dead = false ;
-        if(Gaps(x,y) == 1) dead = true ;
         if(runif(1)[0] <= Pdeath) dead = true ;
           
         if(dead){
@@ -101,41 +125,55 @@ List simulatorCpp(
           for (int s = 0; s < Ns; s++){
             mother = disperse(individual, Rdispersal, grid) ;
             father = disperse(mother, Rdispersal, grid) ;
-            aoffsprings(s) = rnorm(1, (Agen(mother[0],mother[1]) + Agen(father[0],father[1]))/2, sigmaG/2)[0] ;
-            zoffsprings(s) = aoffsprings(s) + rnorm(1, muE, sigmaE)[0] ;
+            atopooffsprings(s) = rnorm(1, (Atopogen(mother[0],mother[1]) + Atopogen(father[0],father[1]))/2, sigmaGtopo/2)[0] ;
+            ztopooffsprings(s) = rnorm(1, atopooffsprings(s), sigmaZtopo)[0] ;
+            ancioffsprings(s) = rnorm(1, (Ancigen(mother[0],mother[1]) + Ancigen(father[0],father[1]))/2, sigmaGnci/2)[0] ;
+            zncioffsprings(s) = rnorm(1, ancioffsprings(s), sigmaZnci)[0] ;
           }
           
           // recruitment
-          viability = 1/sqrt((zoffsprings - Topography(x,y))*(zoffsprings - Topography(x,y))) ;
+          viability = 1/sqrt(( (ztopooffsprings - Topo(x,y))/sigmaTopo )*( (ztopooffsprings - Topo(x,y))/sigmaTopo ) +
+            ( (zncioffsprings - NCIgen(x,y))/sigmaNCI )*( (zncioffsprings - NCIgen(x,y))/sigmaNCI )) ;
           if(determinist){
             winner = which_max(viability) ;
           } else {
             winner = sample(seeds, 1, true, viability)[0] ;
           }
-          Anext(x,y) = aoffsprings(winner) ;
-          Znext(x,y) = zoffsprings(winner) ;
+          Atoponext(x,y) = atopooffsprings(winner) ;
+          Ztoponext(x,y) = ztopooffsprings(winner) ;
+          Ancinext(x,y) = ancioffsprings(winner) ;
+          Zncinext(x,y) = zncioffsprings(winner) ;
           
         } else {
-          Anext(x,y) = Agen(x,y) ;
-          Znext(x,y) = Zgen(x,y) ;
+          Atoponext(x,y) = Atopogen(x,y) ;
+          Ztoponext(x,y) = Ztopogen(x,y) ;
+          Ancinext(x,y) = Ancigen(x,y) ;
+          Zncinext(x,y) = Zncigen(x,y) ;
         }
         
       }
     }
   
     // saving values from the generation
-    Agen = Anext ;
-    Zgen = Znext ;
-    Etopo.row(t) = Topography ;
-    Egaps.row(t) = Gaps ;
-    A.row(t) = Agen ;
-    Z.row(t) = Zgen ;
+    Atopogen = Atoponext ;
+    Ztopogen = Ztoponext ;
+    Ancigen = Ancinext ;
+    Zncigen = Zncinext ;
+    Topography.row(t) = Topo ;
+    Atopo.row(t) = Atopogen ;
+    Ztopo.row(t) = Ztopogen ;
+    Anci.row(t) = Ancigen ;
+    Znci.row(t) = Zncigen ;
   }
   
   // return
-  List sim = List::create(Named("A") = A, 
-                          Named("Z") = Z,
-                          Named("Etopo") = Etopo,
-                          Named("Egaps") = Egaps) ;
+  List sim = List::create(
+    Named("Topography") = Topography,
+    Named("Atopo") = Atopo, 
+    Named("Ztopo") = Ztopo,
+    Named("NCI") = NCI,
+    Named("Anci") = Anci, 
+    Named("Znci") = Znci
+    ) ;
   return sim;
 }

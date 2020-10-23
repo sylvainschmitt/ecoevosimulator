@@ -1,5 +1,8 @@
+#' @include utils-pipe.R
 #' @importFrom raster as.matrix disaggregate raster
 #' @importFrom reshape2 melt
+#' @importFrom dplyr rename mutate n
+#' 
 NULL
 
 #' Spatialy autocorrelated distribution
@@ -27,11 +30,13 @@ rspcor <- function(
   args = list(p = 0.271, mu = 0.749, sigma = 2.651, lambda = 0.31), # arguments for the random generator
   dcor = 3 # spatial autocorrelation size (3*3m)
 ){
+  Var1 <- Var2 <- NULL
   grid2 <- ceiling(grid/dcor)
   args["n"] <- grid2^2
   M2 <- matrix(do.call(generator, as.list(args)), 
                ncol = grid2, nrow = grid2)
   as.matrix(disaggregate(raster(M2), dcor, method="bilinear"))[1:grid, 1:grid] %>% 
     melt() %>% 
-    rename(X = Var1, Y = Var2)
+    rename(X = Var1, Y = Var2) %>% 
+    mutate(Ind = 1:n())
 } 

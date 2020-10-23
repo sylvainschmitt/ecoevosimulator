@@ -4,10 +4,10 @@
 \alias{squareDiamondTopography}
 \title{Topography generator with the square-diamond alogirthm}
 \usage{
-squareDiamondTopography(grid = 2^6 + 1, rudgeness = 1)
+squareDiamondTopography(grid = 20, rudgeness = 1)
 }
 \arguments{
-\item{grid}{int. Matrix grid size should be of size 2^n+1}
+\item{grid}{int. Matrix grid size.}
 
 \item{rudgeness}{double. Rugedness parameter}
 }

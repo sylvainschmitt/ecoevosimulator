@@ -4,12 +4,12 @@
 \alias{plotSim}
 \title{plotSim}
 \usage{
-plotSim(simulation, gen = 1)
+plotSim(simulation, time = 1)
 }
 \arguments{
 \item{simulation}{df.  result from simulator function}
 
-\item{gen}{int.  generation to be plotted}
+\item{time}{int.  generation to be plotted}
 }
 \value{
 A ggplot.

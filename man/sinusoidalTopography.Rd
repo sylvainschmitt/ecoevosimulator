@@ -4,17 +4,17 @@
 \alias{sinusoidalTopography}
 \title{Topography generator with the sinusoidal function}
 \usage{
-sinusoidalTopography(grid = 2^6 + 1, Elim = 10, amplitude = 1)
+sinusoidalTopography(grid = 20, Elim = 10, amplitude = 1)
 }
 \arguments{
-\item{grid}{int. Matrix grid size should be of size 2^n+1}
+\item{grid}{int. Matrix grid size.}
 
-\item{Elim}{double. Environmental matrix extrme (absolute value)}
+\item{Elim}{double. Environmental matrix extrme (absolute value).}
 
-\item{amplitude}{double. Amplitude of the sinusoidal functional}
+\item{amplitude}{double. Amplitude of the sinusoidal functional.}
 }
 \value{
-Environmental matrix of size grid x grid for the simulator
+Environmental matrix of size grid x grid for the simulator.
 }
 \description{
 E = (-Elim, Elim)

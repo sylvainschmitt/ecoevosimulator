@@ -1,3 +1,6 @@
+#' @importFrom stats rbinom rlnorm rexp
+NULL
+
 #' The deltaNCI distribution
 #'
 #' Random generator of deltaNCI based on a proability p to be negative used in a

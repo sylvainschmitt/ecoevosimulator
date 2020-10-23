@@ -3,7 +3,7 @@ NULL
 
 #' Topography generator with the square-diamond alogirthm
 #'
-#' @param grid int. Matrix grid size should be of size 2^n+1
+#' @param grid int. Matrix grid size.
 #' @param rudgeness double. Rugedness parameter
 #'
 #' @return Environmental matrix of size grid x grid for the simulator
@@ -14,13 +14,11 @@ NULL
 #' squareDiamondTopography(5,1)
 #' 
 squareDiamondTopography <- function(
-  grid = 2^6+1, # must be of size 2^n+1 
+  grid = 20,
   rudgeness = 1 # rudgeness
 ){
   # init
-  size <- grid
-  if(!log2(size - 1)%%1==0)
-    stop("Grid must be of size 2^n+1")
+  size <- 2^ceiling(log2(grid-1))+1
   # size <- 2^n+1
   M <- matrix(NA, nrow = size, ncol = size)
   for(x in c(1,size))
@@ -35,7 +33,7 @@ squareDiamondTopography <- function(
       for(y in seq(from = hs + 1, to = size - 1, by = s))
         M  <- squarediamond(M, x, y, hs, rudgeness) 
   }
-  return(M)
+  return(M[1:grid, 1:grid])
 }
 
 #' Square-Diamond algorithm step

@@ -7,9 +7,10 @@ NULL
 
 #' gifMaps
 #'
-#' @param simulation df.  result from simulator function
-#' @param variable char.  variable to visualize "topography", "gaps",
-#'   "genotype", or "phenotype"
+#' @param simulation df. Result from simulator function.
+#' @param type char. Type to visualize "variable", "genotype", or
+#'   "phenotype".
+#' @param variable char. Variable to visualize "topography" or "nci".
 #'
 #' @return A ggplot.
 #'
@@ -20,14 +21,14 @@ NULL
 #' simulation <- simulator(grid = 50)
 #' gifMaps(simulator())
 #' 
-gifMaps <- function(simulation, variable = "genotype"){
+gifMaps <- function(simulation, type = "genotype", variable = "topography"){
   # add a test for variable
-  X <- Y <- value <- generation <- individual <- var <- NULL
-  filter(simulation, var == variable) %>% 
+  X <- Y <- value <- individual <- var <- timestep <- NULL
+  filter(simulation, type == {{type}}, variable == {{variable}}) %>% 
     ggplot(aes(X, Y, fill = value)) +
     geom_tile() +
-    facet_wrap(~ var) +
+    facet_wrap(~ type + variable) +
     viridis::scale_fill_viridis() +
-    transition_time(generation) +
-    labs(title = 'Generation: {frame_time}')
+    transition_time(timestep) +
+    labs(title = 'Timestep: {frame_time}')
 }

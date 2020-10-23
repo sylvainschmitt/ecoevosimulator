@@ -6,6 +6,7 @@ NULL
 
 #'  Topography from Paracou
 #'
+#' @param grid int. Matrix grid size.
 #' @param plot int. Plot number between 1 and 15 (a cell size is 3x3m)
 #' @param Elim double. Environmental matrix extrme (absolute value)
 #'
@@ -17,14 +18,17 @@ NULL
 #' 
 #' paracouTopography(1)
 #' 
-paracouTopography <- function(plot = 1, Elim = 1){
+paracouTopography <- function(grid = 20, plot = 1, Elim = 1){
   X <- value <- Plot <- NULL
   M <- filter(wetness, Plot == plot) %>% 
     mutate(value = Elim*scale(value)) %>% 
     dcast(X ~ Y, value = "value") %>% 
     select(-X) %>% 
     as.matrix()
-  M[1:min(dim(M)),1:min(dim(M))]
+  M <- M[1:min(dim(M)),1:min(dim(M))]
+  if(grid > ncol(M))
+    stop(paste0("Using topography fom Paracou plot ", plot, ", the grid can't excess ", ncol(M)))
+  M[1:grid, 1:grid]
 }
 
 # library(tidyverse)

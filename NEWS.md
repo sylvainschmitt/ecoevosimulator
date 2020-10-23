@@ -1,3 +1,6 @@
+# ecoevosimulator 1.0.9009
+* NCI incorporated in the simulator
+
 # ecoevosimulator 1.0.9008
 * rdeltanci.R
 * rspcor.R

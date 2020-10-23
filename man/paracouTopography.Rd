@@ -4,9 +4,11 @@
 \alias{paracouTopography}
 \title{Topography from Paracou}
 \usage{
-paracouTopography(plot = 1, Elim = 1)
+paracouTopography(grid = 20, plot = 1, Elim = 1)
 }
 \arguments{
+\item{grid}{int. Matrix grid size.}
+
 \item{plot}{int. Plot number between 1 and 15 (a cell size is 3x3m)}
 
 \item{Elim}{double. Environmental matrix extrme (absolute value)}

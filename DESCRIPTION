@@ -19,22 +19,23 @@ Imports:
     reshape2 (>= 1.4.3),
     gridExtra (>= 2.3),
     gganimate (>= 1.0.3),
-    raster (>= 2.9-5)
+    raster (>= 2.9-5),
+    tidyr (>= 0.8.3)
 LinkingTo: Rcpp
 RoxygenNote: 6.1.1
 Collate: 
     'RcppExports.R'
     'ecoevosimulator-package.R'
+    'rdeltanci.R'
     'utils-pipe.R'
+    'rspcor.R'
     'generateNCI.R'
     'gifMaps.R'
     'gui.R'
     'paracouTopography.R'
-    'plot.R'
-    'rdeltanci.R'
-    'rspcor.R'
-    'simulator.R'
     'sinusoidalTopography.R'
+    'simulator.R'
+    'plot.R'
     'squareDiamondTopography.R'
 Suggests: 
     testthat (>= 2.1.0),

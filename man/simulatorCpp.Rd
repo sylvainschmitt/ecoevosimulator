@@ -4,44 +4,45 @@
 \alias{simulatorCpp}
 \title{simulator C++}
 \usage{
-simulatorCpp(Topography, grid = 10L, Nt = 50L, muG = 0, sigmaG = 1,
-  muE = 0, sigmaE = 1, Pfall = 0.01, Rgaps = 2L, Pdeath = 0.1,
-  Ns = 4L, Rdispersal = 1L, determinist = TRUE)
+simulatorCpp(Topo, NCI, grid = 10L, Nt = 50L, sigmaGtopo = 1,
+  sigmaZtopo = 1, sigmaGnci = 2.651, sigmaZnci = 2.651,
+  Pdeath = 0.01325548, Ns = 4L, Rdispersal = 1L,
+  determinist = TRUE)
 }
 \arguments{
-\item{Topography}{matrix. Environmental matrix}
+\item{Topo}{matrix. Topography matrix generated with `sinusoidalTopogrpahy`, 
+`squareDiamondTopography`, `paracouTopography`.}
 
-\item{grid}{int. Number of cell per side of the matrix}
+\item{NCI}{matrix. NCI matrix generated with `generateNCI`.}
 
-\item{Nt}{int. Number of time steps}
+\item{grid}{int. Number of cell per side of the matrix.}
 
-\item{muG}{double. Mean of genetic values}
+\item{Nt}{int. Number of time steps.}
 
-\item{sigmaG}{double. Variance of genetic values}
+\item{sigmaGtopo}{double. Variance of genetic values with topography.}
 
-\item{muE}{double. Mean of environmental values}
+\item{sigmaZtopo}{double. Plasticity of phenotypes with topography.}
 
-\item{sigmaE}{double. Variance of environmental values}
+\item{sigmaGnci}{double. Variance of genetic values with NCI.}
 
-\item{Pfall}{double. Treefall probability}
+\item{sigmaZnci}{double. Plasticity of phenotypes with NCI.}
 
-\item{Rgaps}{int. Treefall gaps radius}
+\item{Pdeath}{double. Background mortality probability.}
 
-\item{Pdeath}{double. Background mortality probability}
+\item{Ns}{int. Number of seedlings per cell.}
 
-\item{Ns}{int. Number of seedlings per cell}
+\item{Rdispersal}{int. Dispersal radius in cells.}
 
-\item{Rdispersal}{int. Dispersal radius in cells}
-
-\item{determinist}{bool. Deterministic or probabilistic vaibility}
+\item{determinist}{bool. Deterministic or probabilistic vaibility.}
 }
 \value{
-A lsit.
+List of 6 Topography, Atopo, Ztopo, NCI, Anci, Znci.
 }
 \description{
 Eco-evolutionary simulator in C++.
 }
 \examples{
-simulatorCpp(Topography = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01))
+simulatorCpp(Topo = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01), 
+             NCI = generateNCIsim(grid = 10, Nt = 50))
 
 }

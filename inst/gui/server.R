@@ -15,16 +15,22 @@ server <- function(input, output) {
     amplitude = 1,
     rudgeness = 1,
     plot = 1,
-    muG = 0,
-    sigmaG = 1,
-    muE = 0,
-    sigmaE = 1,
-    Pfall = 0.01,
-    Rgaps = 2,
-    Pdeath = 0.1,
+    muNCI = 124, 
+    sigmaNCI = 26,
+    p = 0.271,
+    mu = 0.749,
+    sigma = 2.651,
+    lambda = 0.31,
+    d = 3,
+    sigmaGtopo = 1,
+    sigmaZtopo = 1,
+    sigmaGnci = 26,
+    sigmaZnci = 26,
+    Pdeath = 1,
     Ns = 4,
     Rdispersal = 1,
-    determinist = TRUE
+    determinist = TRUE,
+    verbose = TRUE
   )
   
   gif <- reactiveValues(calculate = FALSE)
@@ -37,10 +43,17 @@ server <- function(input, output) {
     parameters$amplitude <- input$amplitude
     parameters$rudgeness <- input$rudgeness
     parameters$plot <- input$plot
-    parameters$sigmaG <- input$sigmaG
-    parameters$sigmaE <- input$sigmaE
-    parameters$Pfall <- input$Pfall
-    parameters$Rgaps <- input$Rgaps
+    parameters$muNCI <- input$muNCI
+    parameters$sigmaNCI <- input$sigmaNCI
+    parameters$p <- input$p
+    parameters$mu <- input$mu
+    parameters$sigma <- input$sigma
+    parameters$lambda <- input$lambda
+    parameters$d <- input$d
+    parameters$sigmaGtopo <- input$sigmaGtopo
+    parameters$sigmaZtopo <- input$sigmaZtopo
+    parameters$sigmaGnci <- input$sigmaGnci
+    parameters$sigmaZnci <- input$sigmaZnci
     parameters$Pdeath <- input$Pdeath
     parameters$Ns <- input$Ns
     parameters$Rdispersal <- input$Rdispersal
@@ -64,16 +77,22 @@ server <- function(input, output) {
     amplitude = parameters$amplitude,
     rudgeness = parameters$rudgeness,
     plot = parameters$plot,
-    muG = 0,
-    sigmaG = parameters$sigmaG,
-    muE = 0,
-    sigmaE = parameters$sigmaE,
-    Pfall = parameters$Pfall,
-    Rgaps = parameters$Rgaps,
+    muNCI = parameters$muNCI, 
+    sigmaNCI = parameters$sigmaNCI,
+    p = parameters$p,
+    mu = parameters$mu,
+    sigma = parameters$sigma,
+    lambda = parameters$lambda,
+    d = parameters$d,
+    sigmaGtopo = parameters$sigmaGtopo,
+    sigmaZtopo = parameters$sigmaZtopo,
+    sigmaGnci = parameters$sigmaGnci,
+    sigmaZnci = parameters$sigmaZnci,
     Pdeath = parameters$Pdeath,
     Ns = parameters$Ns,
     Rdispersal = parameters$Rdispersal,
-    determinist = parameters$determinist
+    determinist = parameters$determinist,
+    verbose = TRUE
     )))
   
   output$gif = renderImage({
@@ -87,16 +106,22 @@ server <- function(input, output) {
         amplitude = parameters$amplitude,
         rudgeness = parameters$rudgeness,
         plot = parameters$plot,
-        muG = 0,
-        sigmaG = parameters$sigmaG,
-        muE = 0,
-        sigmaE = parameters$sigmaE,
-        Pfall = parameters$Pfall,
-        Rgaps = parameters$Rgaps,
+        muNCI = parameters$muNCI, 
+        sigmaNCI = parameters$sigmaNCI,
+        p = parameters$p,
+        mu = parameters$mu,
+        sigma = parameters$sigma,
+        lambda = parameters$lambda,
+        d = parameters$d,
+        sigmaGtopo = parameters$sigmaGtopo,
+        sigmaZtopo = parameters$sigmaZtopo,
+        sigmaGnci = parameters$sigmaGnci,
+        sigmaZnci = parameters$sigmaZnci,
         Pdeath = parameters$Pdeath,
         Ns = parameters$Ns,
         Rdispersal = parameters$Rdispersal,
-        determinist = parameters$determinist
+        determinist = parameters$determinist,
+        verbose = TRUE
       ))
       anim_save("outfile.gif", animate(p))
 

@@ -19,7 +19,7 @@ library(ecoevosimulator)
 ```
 
 ```{r plot}
-plotSim(simulator(grid = 50))
+plotSim(simulator(grid = 10))
 ```
 
 ```{r gaps, eval=F}
