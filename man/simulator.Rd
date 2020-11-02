@@ -4,17 +4,41 @@
 \alias{simulator}
 \title{simulator}
 \usage{
-simulator(grid = 20, Nt = 50, topography = "sinusoidal", Elim = 5,
-  amplitude = 1, rudgeness = 1, plot = 1, muNCI = 124,
-  sigmaNCI = 26, p = 0.271, mu = 0.749, sigma = 2.651,
-  lambda = 0.31, d = 3, sigmaGtopo = 1, sigmaZtopo = 1,
-  sigmaGnci = 26, sigmaZnci = 26, Pdeath = 0.01325548, Ns = 4,
-  Rdispersal = 1, determinist = TRUE, verbose = TRUE)
+simulator(
+  grid = 20,
+  Nt = 50,
+  timestep = 30,
+  topography = "sinusoidal",
+  Elim = 5,
+  amplitude = 1,
+  ruggedness = 1,
+  plot = 1,
+  muNCI = 124,
+  sigmaNCI = 26,
+  alpha = -1.32,
+  beta = 0.003,
+  mu = 0.749,
+  sigma = 2.651,
+  lambda = 0.31,
+  d = 3,
+  sigmaGtopo = 1,
+  sigmaZtopo = 1,
+  sigmaGnci = 26,
+  sigmaZnci = 26,
+  Pdeath = 0.01325548,
+  Ns = 4,
+  Rpollination = 1,
+  Rdispersion = 1,
+  determinist = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{grid}{int.  Number of cells per side of the matrix.}
 
 \item{Nt}{int. Number of time steps.}
+
+\item{timestep}{int. Time-step length in years.}
 
 \item{topography}{char. Topography generator between 'sinusoidal',
 'squarediamond' or 'paracou'.}
@@ -23,7 +47,7 @@ simulator(grid = 20, Nt = 50, topography = "sinusoidal", Elim = 5,
 
 \item{amplitude}{double. Amplitude of the sinusoidal functional.}
 
-\item{rudgeness}{double. Rugedness parameter.}
+\item{ruggedness}{double. Ruggedness parameter.}
 
 \item{plot}{int. Plot number between 1 and 15 (a cell size is 3x3m).}
 
@@ -32,8 +56,11 @@ simulator(grid = 20, Nt = 50, topography = "sinusoidal", Elim = 5,
 \item{sigmaNCI}{double. sigma parameter for the normal distribution used for
 NCI.}
 
-\item{p}{double. Probability to be negative used in the Bernoulli
-distribution.}
+\item{alpha}{double. Intercept for the Bernoulli distribution determining the
+risk to have a negative deltaNCI.}
+
+\item{beta}{double. Slope of previous NCI for the Bernoulli distribution
+determining the risk to have a negative deltaNCI.}
 
 \item{mu}{double. mu parameter for the lognormal distribution used for
 positive deltaNCI.}
@@ -44,7 +71,7 @@ positive deltaNCI.}
 \item{lambda}{double. lambda parameter for the exponential distribution used
 for negative deltaNCI.}
 
-\item{d}{int. Spatial autoccorelation size in number of cells.}
+\item{d}{int. Spatial auto-correlation size in number of cells.}
 
 \item{sigmaGtopo}{double. Variance of genetic values with topography.}
 
@@ -58,9 +85,11 @@ for negative deltaNCI.}
 
 \item{Ns}{int. Number of seedlings per cell.}
 
-\item{Rdispersal}{int. Dispersal radius in cells.}
+\item{Rpollination}{int. Pollination radius in cells (father to mother).}
 
-\item{determinist}{bool. Deterministic or probabilistic vaibility.}
+\item{Rdispersion}{int. Dispersal radius in cells (mother to seedling).}
+
+\item{determinist}{bool. Deterministic or probabilistic viability.}
 
 \item{verbose}{bool. Should the function print statuses.}
 }

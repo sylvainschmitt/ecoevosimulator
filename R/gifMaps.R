@@ -17,8 +17,8 @@ NULL
 #' @export
 #'
 #' @examples
-#'
-#' simulation <- simulator(grid = 50)
+#' 
+#' simulation <- simulator(grid = 5)
 #' gifMaps(simulator())
 #' 
 gifMaps <- function(simulation, type = "genotype", variable = "topography"){

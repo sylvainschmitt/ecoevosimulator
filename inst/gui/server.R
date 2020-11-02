@@ -10,14 +10,16 @@ server <- function(input, output) {
   parameters <- reactiveValues(
     grid = 20,
     Nt = 50,
+    timestep = 30,
     topography = "sinusoidal",
     Elim = 5,
     amplitude = 1,
-    rudgeness = 1,
+    ruggedness = 1,
     plot = 1,
     muNCI = 124, 
     sigmaNCI = 26,
-    p = 0.271,
+    alpha = -1.32,
+    beta = 0.003,
     mu = 0.749,
     sigma = 2.651,
     lambda = 0.31,
@@ -28,7 +30,8 @@ server <- function(input, output) {
     sigmaZnci = 26,
     Pdeath = 1,
     Ns = 4,
-    Rdispersal = 1,
+    Rpollination = 1,
+    Rdispersion = 1,
     determinist = TRUE,
     verbose = TRUE
   )
@@ -38,14 +41,16 @@ server <- function(input, output) {
   observeEvent(input$simulate, {
     parameters$grid <- input$grid
     parameters$Nt <- input$Nt
+    parameters$timestep <- input$timestep
     parameters$topography <- input$topography
     parameters$Elim <- input$Elim
     parameters$amplitude <- input$amplitude
-    parameters$rudgeness <- input$rudgeness
+    parameters$ruggedness <- input$ruggedness
     parameters$plot <- input$plot
     parameters$muNCI <- input$muNCI
     parameters$sigmaNCI <- input$sigmaNCI
-    parameters$p <- input$p
+    parameters$alpha <- input$alpha
+    parameters$beta <- input$beta
     parameters$mu <- input$mu
     parameters$sigma <- input$sigma
     parameters$lambda <- input$lambda
@@ -56,7 +61,8 @@ server <- function(input, output) {
     parameters$sigmaZnci <- input$sigmaZnci
     parameters$Pdeath <- input$Pdeath
     parameters$Ns <- input$Ns
-    parameters$Rdispersal <- input$Rdispersal
+    parameters$Rpollination <- input$Rpollination
+    parameters$Rdispersion <- input$Rdispersion
     parameters$determinist <- input$determinist
     gif$calculate <- FALSE
   })
@@ -72,14 +78,16 @@ server <- function(input, output) {
   output$simulator = renderPlot(plotSim(simulator(
     grid = parameters$grid,
     Nt = parameters$Nt,
+    timestep = parameters$timestep,
     topography = parameters$topography,
     Elim = parameters$Elim,
     amplitude = parameters$amplitude,
-    rudgeness = parameters$rudgeness,
+    ruggedness = parameters$ruggedness,
     plot = parameters$plot,
     muNCI = parameters$muNCI, 
     sigmaNCI = parameters$sigmaNCI,
-    p = parameters$p,
+    alpha = parameters$alpha,
+    beta = parameters$beta,
     mu = parameters$mu,
     sigma = parameters$sigma,
     lambda = parameters$lambda,
@@ -90,7 +98,8 @@ server <- function(input, output) {
     sigmaZnci = parameters$sigmaZnci,
     Pdeath = parameters$Pdeath,
     Ns = parameters$Ns,
-    Rdispersal = parameters$Rdispersal,
+    Rpollination = parameters$Rpollination,
+    Rdispersion = parameters$Rdispersion,
     determinist = parameters$determinist,
     verbose = TRUE
     )))
@@ -101,14 +110,16 @@ server <- function(input, output) {
       p <- gifMaps(simulator(
         grid = parameters$grid,
         Nt = parameters$Nt,
+        timestep = parameters$timestep,
         topography = parameters$topography,
         Elim = parameters$Elim,
         amplitude = parameters$amplitude,
-        rudgeness = parameters$rudgeness,
+        ruggedness = parameters$ruggedness,
         plot = parameters$plot,
         muNCI = parameters$muNCI, 
         sigmaNCI = parameters$sigmaNCI,
-        p = parameters$p,
+        alpha = parameters$alpha,
+        beta = parameters$beta,
         mu = parameters$mu,
         sigma = parameters$sigma,
         lambda = parameters$lambda,
@@ -119,7 +130,8 @@ server <- function(input, output) {
         sigmaZnci = parameters$sigmaZnci,
         Pdeath = parameters$Pdeath,
         Ns = parameters$Ns,
-        Rdispersal = parameters$Rdispersal,
+        Rpollination = parameters$Rpollination,
+        Rdispersion = parameters$Rdispersion,
         determinist = parameters$determinist,
         verbose = TRUE
       ))

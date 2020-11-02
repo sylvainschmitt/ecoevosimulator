@@ -1,24 +1,28 @@
 #' @include utils-pipe.R rspcor.R rdeltanci.R
 #' @importFrom dplyr mutate rename filter select left_join bind_rows
-#' @importFrom reshape2 dcast
+#' @importFrom reshape2 dcast melt
+#' @importFrom raster as.matrix aggregate disaggregate raster values
 NULL
 
 #' Generate NCI over space and time
 #'
 #' @param grid int. Number of cells per side of the matrix.
-#' @param Nt int. Number of time steps.
+#' @param Nt int. Number of time-steps.
+#' @param timestep int. Time-step length in years.
 #' @param muNCI double. mu parameter for the normal distribution used for NCI.
 #' @param sigmaNCI double. sigma parameter for the normal distribution used for
 #'   NCI.
-#' @param p double. Probability to be negative used in the Bernoulli
-#'   distribution.
+#' @param alpha double. Intercept for the Bernoulli distribution determining the
+#'   risk to have a negative deltaNCI.
+#' @param beta double. Slope of previous NCI for the Bernoulli distribution
+#'   determining the risk to have a negative deltaNCI.
 #' @param mu double. mu parameter for the lognormal distribution used for
 #'   positive deltaNCI.
 #' @param sigma double. sigma parameter for the lognormal distribution used for
 #'   positive deltaNCI.
 #' @param lambda double. lambda parameter for the exponential distribution used
 #'   for negative deltaNCI.
-#' @param d int. Spatial autoccorelation size in number of cells.
+#' @param d int. Spatial auto-correlation size in number of cells.
 #'
 #' @return A data frame with columns Time, X, Y and NCI.
 #' 
@@ -28,40 +32,50 @@ NULL
 #' generateNCI()
 generateNCI <- function(
   grid = 50, # grid size
-  Nt = 50, # number of timesteps
-  muNCI = 124, # mu of normal distributon for nci
-  sigmaNCI = 26, # sigma of normal distributon nci
-  p = 0.271, # probability to be positive
-  mu = 0.749, # mu of lognormal distributon for positive deltanci
-  sigma = 2.651, # sigma of lognormal distributon for positive deltanci
-  lambda = 0.31, # lamnda of exponential distributon for negative deltanci
-  d = 3 # spatial autocorrelation size (3*3m)
+  Nt = 50, # number of time-steps
+  timestep = 30, # time-step length in years
+  muNCI = 124, # mu of normal distribution for NCI
+  sigmaNCI = 26, # sigma of normal distribution NCI
+  alpha = -1.32,
+  beta = 0.003,
+  mu = 0.749, # mu of lognormal distribution for positive deltaNCI
+  sigma = 2.651, # sigma of lognormal distribution for positive deltaNCI
+  lambda = 0.31, # lambda of exponential distribution for negative deltaNCI
+  d = 3 # spatial auto-correlation size (3*3m)
 ){
-  value <- Time <- deltaNCI <- Ind <- X <- Y <- NULL
-  NCI <- rspcor(grid = grid, 
-                generator = "rnorm", 
-                args = c(mean = muNCI, sd = sigmaNCI), 
-                dcor = d) %>% 
-    mutate(Time = 1) %>% 
-    mutate(deltaNCI = NA) %>% 
+  Var1 <- Var2 <- value <- NULL
+  
+  nci_y <- rnorm(grid*grid, 
+                 mean = muNCI, 
+                 sd = sigmaNCI)
+  nci_y <- matrix(nci_y, nrow = grid, ncol = grid)
+  nci_y <- raster(nci_y)
+  nci_y <- aggregate(nci_y, d)
+  
+  nci <- as.matrix(disaggregate(nci_y, d, method = "bilinear"))[1:grid,1:grid] %>%
+    melt() %>%
+    rename(X = Var1, Y = Var2) %>% 
+    mutate(Year = 1) %>%
     rename(NCI = value)
-  for(t in 2:Nt){
-    NCIy <- filter(NCI, Time == (t - 1)) %>% 
-      select(-Time, -deltaNCI) %>% 
-      left_join(rspcor(grid = grid, 
-                       generator = "rdeltanci",
-                       args = list(p = p,
-                                   mu = mu, 
-                                   sigma = sigma, 
-                                   lambda = lambda),
-                       dcor = d) %>% 
-                  mutate(Time = t) %>% 
-                  rename(deltaNCI = value), 
-                by = c("X", "Y", "Ind")) %>% 
-      mutate(NCI = NCI + deltaNCI)
-    NCI <- bind_rows(NCI, NCIy)   
+  
+  for(y in 2:(timestep*(Nt-1))){
+    raster::values(nci_y) <- raster::values(nci_y) + rdeltanci(raster::values(nci_y), 
+                                                               alpha = alpha, 
+                                                               beta = beta,
+                                                               mu = mu, 
+                                                               sigma = sigma, 
+                                                               lambda = lambda)
+    if(y %in% (timestep*(1:50))){
+      nci <- bind_rows(nci,  
+                       as.matrix(disaggregate(nci_y, d, method = "bilinear"))[1:grid,1:grid] %>%
+                         melt() %>%
+                         rename(X = Var1, Y = Var2) %>% 
+                         mutate(Year = y) %>%
+                         rename(NCI = value)) 
+    }
   }
-  return(select(NCI, Time, Ind, X, Y, NCI, -deltaNCI))
+    
+  return(nci)
 }
 
 #' Wrapper for generateNCI
@@ -69,12 +83,15 @@ generateNCI <- function(
 #' Format in a matrix for the simulator.
 #'
 #' @param grid int. Number of cells per side of the matrix.
-#' @param Nt int. Number of time steps.
+#' @param Nt int. Number of time-steps.
+#' @param timestep int. Time-step length in years.
 #' @param muNCI double. mu parameter for the normal distribution used for NCI.
 #' @param sigmaNCI double. sigma parameter for the normal distribution used for
 #'   NCI.
-#' @param p double. Probability to be negative used in the Bernoulli
-#'   distribution.
+#' @param alpha double. Intercept for the Bernoulli distribution determining the
+#'   risk to have a negative deltaNCI.
+#' @param beta double. Slope of previous NCI for the Bernoulli distribution
+#'   determining the risk to have a negative deltaNCI.
 #' @param mu double. mu parameter for the lognormal distribution used for
 #'   positive deltaNCI.
 #' @param sigma double. sigma parameter for the lognormal distribution used for
@@ -88,31 +105,39 @@ generateNCI <- function(
 #' @export
 #'
 #' @examples
-#' generateNCI()
+#' generateNCIsim()
 generateNCIsim <- function(
   grid = 50, # grid size
   Nt = 50, # number of timesteps
+  timestep = 30, # time-step length in years
   muNCI = 0.749, # mu of normal distributon for nci
   sigmaNCI = 2.651, # sigma of normal distributon nci
-  p = 0.271, # probability to be positive
+  alpha = -1.32,
+  beta = 0.003,
   mu = 0.749, # mu of lognormal distributon for positive deltanci
   sigma = 2.651, # sigma of lognormal distributon for positive deltanci
   lambda = 0.31, # lamnda of exponential distributon for negative deltanci
   d = 3 # spatial autocorrelation size (3*3m)
 ){
-  Time <- NULL
-  generateNCI(
+  Year <- NULL
+  nci <- generateNCI(
     grid = grid, 
     Nt = Nt, 
+    timestep = timestep,
     muNCI = muNCI, 
     sigmaNCI = sigmaNCI, 
-    p = p, 
+    alpha = alpha,
+    beta = beta,
     mu = mu,
     sigma = sigma,
     lambda = lambda,
-    d = d) %>% 
-    dcast(Time ~ Ind, value.var = "NCI") %>% 
-    select(-Time) %>% 
+    d = d)
+  nci %>% 
+    group_by(Year) %>% 
+    mutate(Ind = 1:n()) %>% 
+    ungroup %>% 
+    dcast(Year ~ Ind, value.var = "NCI") %>% 
+    select(-Year) %>% 
     as.matrix()
 }
 

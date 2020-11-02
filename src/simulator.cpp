@@ -14,14 +14,16 @@ using namespace Rcpp;
 //' @param NCI matrix. NCI matrix generated with `generateNCI`.
 //' @param grid int. Number of cell per side of the matrix.
 //' @param Nt int. Number of time steps.
+//' @param timestep int. Time-step length in years.
 //' @param sigmaGtopo double. Variance of genetic values with topography.
 //' @param sigmaZtopo double. Plasticity of phenotypes with topography.
 //' @param sigmaGnci double. Variance of genetic values with NCI.
 //' @param sigmaZnci double. Plasticity of phenotypes with NCI.
 //' @param Pdeath double. Background mortality probability.
 //' @param Ns int. Number of seedlings per cell.
-//' @param Rdispersal int. Dispersal radius in cells.
-//' @param determinist bool. Deterministic or probabilistic vaibility.
+//' @param Rpollination int. Pollination radius in cells (father to mother).
+//' @param Rdispersion int. Dispersal radius in cells (mother to seedling).
+//' @param determinist bool. Deterministic or probabilistic viability.
 //' 
 //' @return List of 6 Topography, Atopo, Ztopo, NCI, Anci, Znci.
 //' 
@@ -36,13 +38,15 @@ List simulatorCpp(
     Rcpp::NumericMatrix NCI,
     int grid = 10,
     int Nt = 50,
+    int timestep = 30,
     double sigmaGtopo = 1,
     double sigmaZtopo = 1,
     double sigmaGnci = 2.651,
     double sigmaZnci = 2.651,
     double Pdeath = 0.01325548,
     int Ns = 4,
-    int Rdispersal = 1,
+    int Rpollination = 1,
+    int Rdispersion = 1,
     bool determinist = true
 ) {
   int Nind = grid*grid ;
@@ -115,7 +119,7 @@ List simulatorCpp(
 
         // mortality
         dead = false ;
-        if(runif(1)[0] <= Pdeath) dead = true ;
+        if(rbinom(1, timestep, Pdeath)[0] > 0) dead = true ; //  i.e. there has been at least one death event
           
         if(dead){
           
@@ -123,8 +127,8 @@ List simulatorCpp(
           individual[0] = x ;
           individual[1] = y ;
           for (int s = 0; s < Ns; s++){
-            mother = disperse(individual, Rdispersal, grid) ;
-            father = disperse(mother, Rdispersal, grid) ;
+            mother = disperse(individual, Rdispersion, grid) ;
+            father = disperse(mother, Rpollination, grid) ;
             atopooffsprings(s) = rnorm(1, (Atopogen(mother[0],mother[1]) + Atopogen(father[0],father[1]))/2, sigmaGtopo/2)[0] ;
             ztopooffsprings(s) = rnorm(1, atopooffsprings(s), sigmaZtopo)[0] ;
             ancioffsprings(s) = rnorm(1, (Ancigen(mother[0],mother[1]) + Ancigen(father[0],father[1]))/2, sigmaGnci/2)[0] ;

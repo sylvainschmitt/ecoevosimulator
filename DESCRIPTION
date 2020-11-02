@@ -22,7 +22,7 @@ Imports:
     raster (>= 2.9-5),
     tidyr (>= 0.8.3)
 LinkingTo: Rcpp
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Collate: 
     'RcppExports.R'
     'ecoevosimulator-package.R'
@@ -32,6 +32,7 @@ Collate:
     'generateNCI.R'
     'gifMaps.R'
     'gui.R'
+    'logit.R'
     'paracouTopography.R'
     'sinusoidalTopography.R'
     'simulator.R'

@@ -32,14 +32,16 @@ disperse <- function(a, Rdispersal, grid) {
 #' @param NCI matrix. NCI matrix generated with `generateNCI`.
 #' @param grid int. Number of cell per side of the matrix.
 #' @param Nt int. Number of time steps.
+#' @param timestep int. Time-step length in years.
 #' @param sigmaGtopo double. Variance of genetic values with topography.
 #' @param sigmaZtopo double. Plasticity of phenotypes with topography.
 #' @param sigmaGnci double. Variance of genetic values with NCI.
 #' @param sigmaZnci double. Plasticity of phenotypes with NCI.
 #' @param Pdeath double. Background mortality probability.
 #' @param Ns int. Number of seedlings per cell.
-#' @param Rdispersal int. Dispersal radius in cells.
-#' @param determinist bool. Deterministic or probabilistic vaibility.
+#' @param Rpollination int. Pollination radius in cells (father to mother).
+#' @param Rdispersion int. Dispersal radius in cells (mother to seedling).
+#' @param determinist bool. Deterministic or probabilistic viability.
 #' 
 #' @return List of 6 Topography, Atopo, Ztopo, NCI, Anci, Znci.
 #' 
@@ -48,7 +50,7 @@ disperse <- function(a, Rdispersal, grid) {
 #'              NCI = generateNCIsim(grid = 10, Nt = 50))
 #' 
 #' @export
-simulatorCpp <- function(Topo, NCI, grid = 10L, Nt = 50L, sigmaGtopo = 1, sigmaZtopo = 1, sigmaGnci = 2.651, sigmaZnci = 2.651, Pdeath = 0.01325548, Ns = 4L, Rdispersal = 1L, determinist = TRUE) {
-    .Call(`_ecoevosimulator_simulatorCpp`, Topo, NCI, grid, Nt, sigmaGtopo, sigmaZtopo, sigmaGnci, sigmaZnci, Pdeath, Ns, Rdispersal, determinist)
+simulatorCpp <- function(Topo, NCI, grid = 10L, Nt = 50L, timestep = 30L, sigmaGtopo = 1, sigmaZtopo = 1, sigmaGnci = 2.651, sigmaZnci = 2.651, Pdeath = 0.01325548, Ns = 4L, Rpollination = 1L, Rdispersion = 1L, determinist = TRUE) {
+    .Call(`_ecoevosimulator_simulatorCpp`, Topo, NCI, grid, Nt, timestep, sigmaGtopo, sigmaZtopo, sigmaGnci, sigmaZnci, Pdeath, Ns, Rpollination, Rdispersion, determinist)
 }
 

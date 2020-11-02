@@ -4,14 +4,24 @@
 \alias{rdeltanci}
 \title{The deltaNCI distribution}
 \usage{
-rdeltanci(n = 1, p = 0.271, mu = 0.749, sigma = 2.651,
-  lambda = 0.31)
+rdeltanci(
+  NCI = rnorm(1, mean = 122.73, sd = 25.806),
+  alpha = -1.32,
+  beta = 0.003,
+  mu = 0.749,
+  sigma = 2.651,
+  lambda = 0.31
+)
 }
 \arguments{
-\item{n}{int. Number of observations.}
+\item{NCI}{double. Vector of previous NCI (size of the vector determines
+number of generated deltaNCI).}
 
-\item{p}{double. Probability to be negative used in the Bernoulli
-distribution.}
+\item{alpha}{double. Intercept for the Bernoulli distribution determining the
+risk to have a negative deltaNCI.}
+
+\item{beta}{double. Slope of previous NCI for the Bernoulli distribution
+determining the risk to have a negative deltaNCI.}
 
 \item{mu}{double. mu parameter for the lognormal distribution used for
 positive deltaNCI.}

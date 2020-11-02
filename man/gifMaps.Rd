@@ -22,7 +22,7 @@ gifMaps
 }
 \examples{
 
-simulation <- simulator(grid = 50)
+simulation <- simulator(grid = 5)
 gifMaps(simulator())
 
 }

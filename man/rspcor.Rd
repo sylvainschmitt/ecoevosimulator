@@ -2,31 +2,29 @@
 % Please edit documentation in R/rspcor.R
 \name{rspcor}
 \alias{rspcor}
-\title{Spatialy autocorrelated distribution}
+\title{Spatially auto-correlated distribution}
 \usage{
-rspcor(grid = 50, generator = "rdeltanci", args = list(p = 0.271, mu
-  = 0.749, sigma = 2.651, lambda = 0.31), dcor = 3)
+rspcor(
+  M = matrix(rdeltanci(NCI = rnorm(50 * 50, mean = 122.73, sd = 25.806)), ncol = 50,
+    nrow = 50),
+  dcor = 3
+)
 }
 \arguments{
-\item{grid}{int. Matrix grid size.}
+\item{M}{matrix. Environmental matrix in which to create spatial
+auto-correlation.}
 
-\item{generator}{char. Name of the random generator function (e.g.
-rdeltanci).}
-
-\item{args}{list. List of arguments used in the random generator at the
-exception of the number of observations n.}
-
-\item{dcor}{int. Spatial autoccorelation size in number of cells.}
+\item{dcor}{int. Spatial auto-correlation size in number of cells.}
 }
 \value{
 A data.frame of X, Y, and values.
 }
 \description{
-Spatial random generator of spatially autocorrelated distribution based on a
-given random generator. The generator uses a simple spatial resamplng of a
-smaler grid.
+Spatial random generator of spatially auto-correlated distribution based on a
+given random generator. The generator uses a simple spatial resampling of a
+smaller grid.
 }
 \examples{
-rspcor(50)
+rspcor()
 
 }

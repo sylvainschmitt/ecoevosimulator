@@ -1,3 +1,8 @@
+# ecoevosimulator 1.0.9010
+* generateNCi with deltaNCI ~ NCIlag
+* logit.R
+* Rpollination & Rdispersion
+
 # ecoevosimulator 1.0.9009
 * NCI incorporated in the simulator
 

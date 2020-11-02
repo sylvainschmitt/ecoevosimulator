@@ -19,8 +19,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // simulatorCpp
-List simulatorCpp(Rcpp::NumericMatrix Topo, Rcpp::NumericMatrix NCI, int grid, int Nt, double sigmaGtopo, double sigmaZtopo, double sigmaGnci, double sigmaZnci, double Pdeath, int Ns, int Rdispersal, bool determinist);
-RcppExport SEXP _ecoevosimulator_simulatorCpp(SEXP TopoSEXP, SEXP NCISEXP, SEXP gridSEXP, SEXP NtSEXP, SEXP sigmaGtopoSEXP, SEXP sigmaZtopoSEXP, SEXP sigmaGnciSEXP, SEXP sigmaZnciSEXP, SEXP PdeathSEXP, SEXP NsSEXP, SEXP RdispersalSEXP, SEXP deterministSEXP) {
+List simulatorCpp(Rcpp::NumericMatrix Topo, Rcpp::NumericMatrix NCI, int grid, int Nt, int timestep, double sigmaGtopo, double sigmaZtopo, double sigmaGnci, double sigmaZnci, double Pdeath, int Ns, int Rpollination, int Rdispersion, bool determinist);
+RcppExport SEXP _ecoevosimulator_simulatorCpp(SEXP TopoSEXP, SEXP NCISEXP, SEXP gridSEXP, SEXP NtSEXP, SEXP timestepSEXP, SEXP sigmaGtopoSEXP, SEXP sigmaZtopoSEXP, SEXP sigmaGnciSEXP, SEXP sigmaZnciSEXP, SEXP PdeathSEXP, SEXP NsSEXP, SEXP RpollinationSEXP, SEXP RdispersionSEXP, SEXP deterministSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -28,22 +28,24 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type NCI(NCISEXP);
     Rcpp::traits::input_parameter< int >::type grid(gridSEXP);
     Rcpp::traits::input_parameter< int >::type Nt(NtSEXP);
+    Rcpp::traits::input_parameter< int >::type timestep(timestepSEXP);
     Rcpp::traits::input_parameter< double >::type sigmaGtopo(sigmaGtopoSEXP);
     Rcpp::traits::input_parameter< double >::type sigmaZtopo(sigmaZtopoSEXP);
     Rcpp::traits::input_parameter< double >::type sigmaGnci(sigmaGnciSEXP);
     Rcpp::traits::input_parameter< double >::type sigmaZnci(sigmaZnciSEXP);
     Rcpp::traits::input_parameter< double >::type Pdeath(PdeathSEXP);
     Rcpp::traits::input_parameter< int >::type Ns(NsSEXP);
-    Rcpp::traits::input_parameter< int >::type Rdispersal(RdispersalSEXP);
+    Rcpp::traits::input_parameter< int >::type Rpollination(RpollinationSEXP);
+    Rcpp::traits::input_parameter< int >::type Rdispersion(RdispersionSEXP);
     Rcpp::traits::input_parameter< bool >::type determinist(deterministSEXP);
-    rcpp_result_gen = Rcpp::wrap(simulatorCpp(Topo, NCI, grid, Nt, sigmaGtopo, sigmaZtopo, sigmaGnci, sigmaZnci, Pdeath, Ns, Rdispersal, determinist));
+    rcpp_result_gen = Rcpp::wrap(simulatorCpp(Topo, NCI, grid, Nt, timestep, sigmaGtopo, sigmaZtopo, sigmaGnci, sigmaZnci, Pdeath, Ns, Rpollination, Rdispersion, determinist));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ecoevosimulator_disperse", (DL_FUNC) &_ecoevosimulator_disperse, 3},
-    {"_ecoevosimulator_simulatorCpp", (DL_FUNC) &_ecoevosimulator_simulatorCpp, 12},
+    {"_ecoevosimulator_simulatorCpp", (DL_FUNC) &_ecoevosimulator_simulatorCpp, 14},
     {NULL, NULL, 0}
 };
 

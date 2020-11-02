@@ -2,20 +2,20 @@
 % Please edit documentation in R/squareDiamondTopography.R
 \name{squareDiamondTopography}
 \alias{squareDiamondTopography}
-\title{Topography generator with the square-diamond alogirthm}
+\title{Topography generator with the square-diamond algorithm}
 \usage{
-squareDiamondTopography(grid = 20, rudgeness = 1)
+squareDiamondTopography(grid = 20, ruggedness = 1)
 }
 \arguments{
 \item{grid}{int. Matrix grid size.}
 
-\item{rudgeness}{double. Rugedness parameter}
+\item{ruggedness}{double. Ruggedness parameter}
 }
 \value{
 Environmental matrix of size grid x grid for the simulator
 }
 \description{
-Topography generator with the square-diamond alogirthm
+Topography generator with the square-diamond algorithm
 }
 \examples{
 squareDiamondTopography(5,1)

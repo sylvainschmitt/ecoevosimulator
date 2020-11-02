@@ -4,10 +4,22 @@
 \alias{simulatorCpp}
 \title{simulator C++}
 \usage{
-simulatorCpp(Topo, NCI, grid = 10L, Nt = 50L, sigmaGtopo = 1,
-  sigmaZtopo = 1, sigmaGnci = 2.651, sigmaZnci = 2.651,
-  Pdeath = 0.01325548, Ns = 4L, Rdispersal = 1L,
-  determinist = TRUE)
+simulatorCpp(
+  Topo,
+  NCI,
+  grid = 10L,
+  Nt = 50L,
+  timestep = 30L,
+  sigmaGtopo = 1,
+  sigmaZtopo = 1,
+  sigmaGnci = 2.651,
+  sigmaZnci = 2.651,
+  Pdeath = 0.01325548,
+  Ns = 4L,
+  Rpollination = 1L,
+  Rdispersion = 1L,
+  determinist = TRUE
+)
 }
 \arguments{
 \item{Topo}{matrix. Topography matrix generated with `sinusoidalTopogrpahy`, 
@@ -18,6 +30,8 @@ simulatorCpp(Topo, NCI, grid = 10L, Nt = 50L, sigmaGtopo = 1,
 \item{grid}{int. Number of cell per side of the matrix.}
 
 \item{Nt}{int. Number of time steps.}
+
+\item{timestep}{int. Time-step length in years.}
 
 \item{sigmaGtopo}{double. Variance of genetic values with topography.}
 
@@ -31,9 +45,11 @@ simulatorCpp(Topo, NCI, grid = 10L, Nt = 50L, sigmaGtopo = 1,
 
 \item{Ns}{int. Number of seedlings per cell.}
 
-\item{Rdispersal}{int. Dispersal radius in cells.}
+\item{Rpollination}{int. Pollination radius in cells (father to mother).}
 
-\item{determinist}{bool. Deterministic or probabilistic vaibility.}
+\item{Rdispersion}{int. Dispersal radius in cells (mother to seedling).}
+
+\item{determinist}{bool. Deterministic or probabilistic viability.}
 }
 \value{
 List of 6 Topography, Atopo, Ztopo, NCI, Anci, Znci.

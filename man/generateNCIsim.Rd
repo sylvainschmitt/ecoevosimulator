@@ -4,21 +4,37 @@
 \alias{generateNCIsim}
 \title{Wrapper for generateNCI}
 \usage{
-generateNCIsim(grid = 50, Nt = 50, muNCI = 0.749, sigmaNCI = 2.651,
-  p = 0.271, mu = 0.749, sigma = 2.651, lambda = 0.31, d = 3)
+generateNCIsim(
+  grid = 50,
+  Nt = 50,
+  timestep = 30,
+  muNCI = 0.749,
+  sigmaNCI = 2.651,
+  alpha = -1.32,
+  beta = 0.003,
+  mu = 0.749,
+  sigma = 2.651,
+  lambda = 0.31,
+  d = 3
+)
 }
 \arguments{
 \item{grid}{int. Number of cells per side of the matrix.}
 
-\item{Nt}{int. Number of time steps.}
+\item{Nt}{int. Number of time-steps.}
+
+\item{timestep}{int. Time-step length in years.}
 
 \item{muNCI}{double. mu parameter for the normal distribution used for NCI.}
 
 \item{sigmaNCI}{double. sigma parameter for the normal distribution used for
 NCI.}
 
-\item{p}{double. Probability to be negative used in the Bernoulli
-distribution.}
+\item{alpha}{double. Intercept for the Bernoulli distribution determining the
+risk to have a negative deltaNCI.}
+
+\item{beta}{double. Slope of previous NCI for the Bernoulli distribution
+determining the risk to have a negative deltaNCI.}
 
 \item{mu}{double. mu parameter for the lognormal distribution used for
 positive deltaNCI.}
@@ -38,5 +54,5 @@ A matrix..
 Format in a matrix for the simulator.
 }
 \examples{
-generateNCI()
+generateNCIsim()
 }

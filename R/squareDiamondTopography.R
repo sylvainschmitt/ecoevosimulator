@@ -1,10 +1,10 @@
 #' @importFrom stats na.omit rnorm
 NULL
 
-#' Topography generator with the square-diamond alogirthm
+#' Topography generator with the square-diamond algorithm
 #'
 #' @param grid int. Matrix grid size.
-#' @param rudgeness double. Rugedness parameter
+#' @param ruggedness double. Ruggedness parameter
 #'
 #' @return Environmental matrix of size grid x grid for the simulator
 #' 
@@ -15,7 +15,7 @@ NULL
 #' 
 squareDiamondTopography <- function(
   grid = 20,
-  rudgeness = 1 # rudgeness
+  ruggedness = 1 # ruggedness
 ){
   # init
   size <- 2^ceiling(log2(grid-1))+1
@@ -23,7 +23,7 @@ squareDiamondTopography <- function(
   M <- matrix(NA, nrow = size, ncol = size)
   for(x in c(1,size))
     for(y in c(1,size))
-      M[x,y] <- rudgeness*rnorm(1)
+      M[x,y] <- ruggedness*rnorm(1)
   hs <- size - 1
   # loop
   while(hs > 1){
@@ -31,7 +31,7 @@ squareDiamondTopography <- function(
     hs <- hs/2
     for(x in seq(from = hs + 1, to = size - 1, by = s))
       for(y in seq(from = hs + 1, to = size - 1, by = s))
-        M  <- squarediamond(M, x, y, hs, rudgeness) 
+        M  <- squarediamond(M, x, y, hs, ruggedness) 
   }
   return(M[1:grid, 1:grid])
 }

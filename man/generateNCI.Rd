@@ -4,21 +4,37 @@
 \alias{generateNCI}
 \title{Generate NCI over space and time}
 \usage{
-generateNCI(grid = 50, Nt = 50, muNCI = 124, sigmaNCI = 26,
-  p = 0.271, mu = 0.749, sigma = 2.651, lambda = 0.31, d = 3)
+generateNCI(
+  grid = 50,
+  Nt = 50,
+  timestep = 30,
+  muNCI = 124,
+  sigmaNCI = 26,
+  alpha = -1.32,
+  beta = 0.003,
+  mu = 0.749,
+  sigma = 2.651,
+  lambda = 0.31,
+  d = 3
+)
 }
 \arguments{
 \item{grid}{int. Number of cells per side of the matrix.}
 
-\item{Nt}{int. Number of time steps.}
+\item{Nt}{int. Number of time-steps.}
+
+\item{timestep}{int. Time-step length in years.}
 
 \item{muNCI}{double. mu parameter for the normal distribution used for NCI.}
 
 \item{sigmaNCI}{double. sigma parameter for the normal distribution used for
 NCI.}
 
-\item{p}{double. Probability to be negative used in the Bernoulli
-distribution.}
+\item{alpha}{double. Intercept for the Bernoulli distribution determining the
+risk to have a negative deltaNCI.}
+
+\item{beta}{double. Slope of previous NCI for the Bernoulli distribution
+determining the risk to have a negative deltaNCI.}
 
 \item{mu}{double. mu parameter for the lognormal distribution used for
 positive deltaNCI.}
@@ -29,7 +45,7 @@ positive deltaNCI.}
 \item{lambda}{double. lambda parameter for the exponential distribution used
 for negative deltaNCI.}
 
-\item{d}{int. Spatial autoccorelation size in number of cells.}
+\item{d}{int. Spatial auto-correlation size in number of cells.}
 }
 \value{
 A data frame with columns Time, X, Y and NCI.
