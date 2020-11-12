@@ -59,6 +59,6 @@ Eco-evolutionary simulator in C++.
 }
 \examples{
 simulatorCpp(Topo = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01), 
-             NCI = generateNCIsim(grid = 10, Nt = 50))
+             NCI = generateNCI(grid = 10, Nt = 50))
 
 }

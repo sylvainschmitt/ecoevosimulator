@@ -5,7 +5,7 @@
 \title{Generate NCI over space and time}
 \usage{
 generateNCI(
-  grid = 50,
+  grid = 20,
   Nt = 50,
   timestep = 30,
   muNCI = 124,

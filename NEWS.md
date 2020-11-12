@@ -1,7 +1,11 @@
+# ecoevosimulator 1.0.9011
+* split topo, nci, & simulation
+
 # ecoevosimulator 1.0.9010
 * generateNCi with deltaNCI ~ NCIlag
 * logit.R
 * Rpollination & Rdispersion
+* spelling ruggedness
 
 # ecoevosimulator 1.0.9009
 * NCI incorporated in the simulator

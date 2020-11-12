@@ -17,6 +17,6 @@ plotTrajectories
 }
 \examples{
 
-plotTrajectories(simulator())
+plotTrajectories(simulatorAll())
 
 }

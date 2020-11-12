@@ -29,7 +29,7 @@ using namespace Rcpp;
 //' 
 //' @examples
 //' simulatorCpp(Topo = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01), 
-//'              NCI = generateNCIsim(grid = 10, Nt = 50))
+//'              NCI = generateNCI(grid = 10, Nt = 50))
 //' 
 //' @export
 // [[Rcpp::export]]
@@ -94,6 +94,10 @@ List simulatorCpp(
   // Initialisation
   double muTopo = mean(Topo), muNCI = mean(NCI) ;
   double sigmaTopo = sd(Topo), sigmaNCI = sd(NCI) ;
+  if(sigmaTopo < 0.001) sigmaTopo = 1 ;
+  if(sigmaNCI < 0.001) sigmaNCI = 1 ;
+  // Rcout << "sigmaTopo is " << sigmaTopo << std::endl ;
+  // Rcout << "sigmaNCI is " << sigmaNCI << std::endl ;
   Topography.row(0) = Topo ;
   for(int i = 0; i < Nind; i++){
     Atopogen[i] = rnorm(1, muTopo, sigmaGtopo)[0] ;

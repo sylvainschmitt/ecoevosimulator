@@ -19,6 +19,6 @@ plotSim
 }
 \examples{
 
-plotSim(simulator())
+plotSim(simulatorAll())
 
 }

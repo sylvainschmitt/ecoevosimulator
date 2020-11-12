@@ -21,8 +21,6 @@ A ggplot.
 gifMaps
 }
 \examples{
-
-simulation <- simulator(grid = 5)
-gifMaps(simulator())
+gifMaps(simulatorAll(grid = 5))
 
 }

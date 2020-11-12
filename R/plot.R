@@ -17,7 +17,7 @@ NULL
 #'
 #' @examples
 #' 
-#' plotSim(simulator())
+#' plotSim(simulatorAll())
 #' 
 plotSim <- function(simulation, time = 1){
   grid.arrange(
@@ -39,7 +39,7 @@ plotSim <- function(simulation, time = 1){
 #'
 #' @examples
 #' 
-#' plotMaps(simulator())
+#' plotMaps(simulatorAll())
 #' 
 plotMaps <- function(simulation){
   X <- Y <- value <- timestep <- individual <- var <- variable <- NULL
@@ -65,7 +65,7 @@ plotMaps <- function(simulation){
 #'
 #' @examples
 #' 
-#' plotTrajectories(simulator())
+#' plotTrajectories(simulatorAll())
 #' 
 plotTrajectories <- function(simulation){
   X <- Y <- value <- timestep <- individual <- variable <- env <- NULL

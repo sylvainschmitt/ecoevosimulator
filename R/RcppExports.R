@@ -47,7 +47,7 @@ disperse <- function(a, Rdispersal, grid) {
 #' 
 #' @examples
 #' simulatorCpp(Topo = sinusoidalTopography(grid = 10, Elim = 5, amplitude = 0.01), 
-#'              NCI = generateNCIsim(grid = 10, Nt = 50))
+#'              NCI = generateNCI(grid = 10, Nt = 50))
 #' 
 #' @export
 simulatorCpp <- function(Topo, NCI, grid = 10L, Nt = 50L, timestep = 30L, sigmaGtopo = 1, sigmaZtopo = 1, sigmaGnci = 2.651, sigmaZnci = 2.651, Pdeath = 0.01325548, Ns = 4L, Rpollination = 1L, Rdispersion = 1L, determinist = TRUE) {

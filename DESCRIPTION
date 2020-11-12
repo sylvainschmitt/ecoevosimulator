@@ -1,7 +1,7 @@
 Package: ecoevosimulator
 Type: Package
 Title: Eco-evolutionnary simulator
-Version: 1.0.9007
+Version: 1.0.9011
 Author: Sylvain Schmitt
 Maintainer: Sylvain Schmitt <sylvain.m.schmitt@gmail.com>
 Description: Simulating eco-evolutionnary dynamics of virtual populations with topography and forest gap dynamics.
@@ -30,14 +30,16 @@ Collate:
     'utils-pipe.R'
     'rspcor.R'
     'generateNCI.R'
+    'paracouTopography.R'
+    'squareDiamondTopography.R'
+    'sinusoidalTopography.R'
+    'generateTopography.R'
     'gifMaps.R'
     'gui.R'
     'logit.R'
-    'paracouTopography.R'
-    'sinusoidalTopography.R'
     'simulator.R'
     'plot.R'
-    'squareDiamondTopography.R'
+    'simulatorAll.R'
 Suggests: 
     testthat (>= 2.1.0),
     shinydashboard (>= 0.7.1),

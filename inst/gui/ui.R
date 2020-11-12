@@ -1,4 +1,4 @@
-# devtools::install_github("sylvainschmitt/ecoevosimulator")
+# devtools::install_github("sylvainschmitt/ecoevosimulator", upgrade = "never")
 # need to install from github to push on shinyapps
 
 library(ecoevosimulator)

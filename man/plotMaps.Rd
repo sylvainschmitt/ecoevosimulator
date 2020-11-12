@@ -17,6 +17,6 @@ plotMaps
 }
 \examples{
 
-plotMaps(simulator())
+plotMaps(simulatorAll())
 
 }
