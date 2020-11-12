@@ -15,6 +15,8 @@ NULL
 #' @export
 #'
 #' @examples
+#' generateTopography()
+#' 
 generateTopography <- function(
   grid = 20,
   topography = "sinusoidal",

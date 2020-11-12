@@ -33,3 +33,7 @@ A matrix of TWI for the simulator.
 \description{
 Generate topography
 }
+\examples{
+generateTopography()
+
+}

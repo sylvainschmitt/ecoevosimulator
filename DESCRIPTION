@@ -1,7 +1,7 @@
 Package: ecoevosimulator
 Type: Package
 Title: Eco-evolutionnary simulator
-Version: 1.0.9011
+Version: 1.0.9012
 Author: Sylvain Schmitt
 Maintainer: Sylvain Schmitt <sylvain.m.schmitt@gmail.com>
 Description: Simulating eco-evolutionnary dynamics of virtual populations with topography and forest gap dynamics.
@@ -39,6 +39,7 @@ Collate:
     'logit.R'
     'simulator.R'
     'plot.R'
+    'simulationMetrics.R'
     'simulatorAll.R'
 Suggests: 
     testthat (>= 2.1.0),

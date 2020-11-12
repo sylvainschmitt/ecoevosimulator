@@ -1,3 +1,6 @@
+# ecoevosimulator 1.0.9012
+* simulation metrics
+
 # ecoevosimulator 1.0.9011
 * split topo, nci, & simulation
 
